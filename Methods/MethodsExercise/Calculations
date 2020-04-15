@@ -1,0 +1,57 @@
+using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Transactions;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string operation = Console.ReadLine();
+            int firstNumber = int.Parse(Console.ReadLine());
+            int secondNumber = int.Parse(Console.ReadLine());
+
+            if (operation == "add")
+            {
+                Add(firstNumber, secondNumber);
+            }
+            else if (operation == "multiply")
+            {
+                Multiply(firstNumber, secondNumber);
+            }
+            else if (operation == "divide")
+            {
+                Divide(firstNumber, secondNumber);
+            }
+            else if (operation == "subtract")
+            {
+                Subtract(firstNumber, secondNumber);
+            }
+        }
+
+        static void Add(int firstNumber, int secondNumber)
+        {
+            Console.WriteLine(firstNumber + secondNumber);
+        }
+
+        static void Multiply(int firstNumber, int secondNumber)
+        {
+            Console.WriteLine(firstNumber * secondNumber);
+        }
+
+        static void Divide(int firstNumber, int secondNumber)
+        {
+            Console.WriteLine(firstNumber / secondNumber);
+        }
+
+        static void Subtract(int firstNumber, int secondNumber)
+        {
+            Console.WriteLine(firstNumber - secondNumber);
+        }
+    }
+}
