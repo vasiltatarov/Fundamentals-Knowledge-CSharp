@@ -1,0 +1,37 @@
+using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Transactions;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int n = int.Parse(Console.ReadLine());
+
+            for (int row = 1; row <= n; row++)
+            {
+                PrintTriangle(row);
+            }
+
+            for (int row = n - 1; row > 0; row--)
+            {
+                PrintTriangle(row);
+            }
+        }
+
+        static void PrintTriangle(int row)
+        {
+            for (int col = 1; col <= row; col++)
+            {
+                Console.Write(col + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}
