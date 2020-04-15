@@ -1,0 +1,56 @@
+using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Transactions;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int number = int.Parse(Console.ReadLine());
+            GetSumOfEvenAndOdd(Math.Abs(number));
+        }
+
+        static void GetSumOfEvenAndOdd(int number)
+        {
+            Console.WriteLine(GetSumOfEvenDigits(number) * GetSumOfOddDigits(number));
+        }
+
+        static int GetSumOfEvenDigits(int number)
+        {
+            int sumOfEven = 0;
+            int currentNumber = number;
+            while (currentNumber > 0)
+            {
+                int lastNumber = currentNumber % 10;
+                if (lastNumber % 2 == 0)
+                {
+                    sumOfEven += lastNumber;
+                }
+                currentNumber /= 10;
+            }
+            return sumOfEven;
+        }
+
+        static int GetSumOfOddDigits(int number)
+        {
+            int sumOfOdd = 0;
+            int currentNumber = number;
+            while (currentNumber > 0)
+            {
+                int lastNumber = currentNumber % 10;
+                if (lastNumber % 2 == 1)
+                {
+                    sumOfOdd += lastNumber;
+                }
+                currentNumber /= 10;
+            }
+            return sumOfOdd;
+        }
+    }
+}
