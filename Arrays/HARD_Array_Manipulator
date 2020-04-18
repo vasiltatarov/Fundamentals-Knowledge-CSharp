@@ -1,0 +1,241 @@
+using System;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Transactions;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] numbers = Console.ReadLine().Split(" ").Select(int.Parse).ToArray(); // 1 2 3 4 5
+
+            string commandInput;
+            while ((commandInput = Console.ReadLine()) != "end")
+            {
+                string[] commandArgs = (commandInput).Split(" ");
+
+                string command = commandArgs[0]; // exchange (2)
+
+                if (command == "exchange")
+                {
+                    int index = int.Parse(commandArgs[1]); // (2)
+
+                    if (index < 0 || index >= numbers.Length)
+                    {
+                        Console.WriteLine("Invalid index");
+                    }
+                    else
+                    {
+                        GetExchange(index, numbers);
+
+                        Console.WriteLine(string.Join(", ", numbers));
+                    }
+                }
+                else if (command == "max")
+                {
+                    int evenOrOdd = 0;
+                    string maxEvenOrOdd = commandArgs[1];
+
+                    if (maxEvenOrOdd == "even")
+                    {
+                        evenOrOdd = 0;
+                        GetMaxIndex(numbers, evenOrOdd);
+                    }
+                    else if (maxEvenOrOdd == "odd")
+                    {
+                        evenOrOdd = 1;
+                        GetMaxIndex(numbers, evenOrOdd);
+                    }
+                }
+                else if (command == "min")
+                {
+                    string maxEvenOrOdd = commandArgs[1];
+                    int evenOrOdd;
+
+                    if (maxEvenOrOdd == "even")
+                    {
+                        evenOrOdd = 0;
+                        GetMinIndex(numbers, evenOrOdd);
+                    }
+                    else if (maxEvenOrOdd == "odd")
+                    {
+                        evenOrOdd = 1;
+                        GetMinIndex(numbers, evenOrOdd);
+                    }
+                }
+                else if (command == "first")
+                {
+                    int count = int.Parse(commandArgs[1]);
+                    string evenOrOdd = commandArgs[2];
+                    int evenOrOddPosition;
+
+                    if (count < 0 || count >= numbers.Length)
+                    {
+                        Console.WriteLine("Invalid count");
+                    }
+                    else if (evenOrOdd == "even")
+                    {
+                        evenOrOddPosition = 0;
+                        //int[] firstCountElements = new int[count];
+                        GetFirstCountIndex(numbers, evenOrOddPosition, count);
+                        //Console.WriteLine(string.Join(",", firstCountElements));
+                    }
+                    else if (evenOrOdd == "odd")
+                    {
+                        evenOrOddPosition = 1;
+                        GetFirstCountIndex(numbers, evenOrOddPosition, count);
+                    }
+                }          // REPEAT SPECIFIED ABOVE
+                else if (command == "last")
+                {
+                    int count = int.Parse(commandArgs[1]);
+                    string evenOrOdd = commandArgs[2];
+                    int evenOrOddPosition;
+
+                    if (count < 0 || count > numbers.Length)
+                    {
+                        Console.WriteLine("Invalid count");
+                    }
+                    else if (evenOrOdd == "even")
+                    {
+                        evenOrOddPosition = 0;
+                        GetLastCountIndex(numbers, evenOrOddPosition, count);
+                    }
+                    else if (evenOrOdd == "odd")
+                    {
+                        evenOrOddPosition = 1;
+                        GetLastCountIndex(numbers, evenOrOddPosition, count);
+                    }
+                }
+            }
+
+        }
+
+        private static void GetExchange(int index, int[] numbers)
+        {
+            int[] toExchange = new int[index + 1]; // (2) = 0 1 2
+
+            Array.Copy(numbers, toExchange, index + 1); // to.. = 0 1 2
+
+            int currentIndex = 0;
+            for (int i = index + 1; i < numbers.Length; i++)
+            {
+                numbers[currentIndex] = numbers[i];
+                currentIndex++;
+            }
+
+            for (int i = 0; i < toExchange.Length; i++)
+            {
+                numbers[currentIndex] = toExchange[i];
+                currentIndex++;
+            }
+        }
+
+        private static void GetMaxIndex(int[] numbers, int evenOrOdd)
+        {
+            int maxValue = int.MinValue;
+            int counter = 0;
+            string noMatch = "No matches";
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (maxValue < numbers[i] && numbers[i] % 2 == evenOrOdd)
+                {
+                    maxValue = i;
+                    counter++;
+                }
+            }
+            if (counter != 0)
+            {
+                //return maxValue;
+                Console.WriteLine(maxValue);
+            }
+            else
+            {
+                //return noMatch;
+                Console.WriteLine(noMatch);
+            }
+        }
+
+        private static void GetMinIndex(int[] numbers, int evenOrOdd)
+        {
+            int minValue = int.MaxValue;
+            int counter = 0;
+            string noMatch = "No matches";
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (minValue > numbers[i] && numbers[i] % 2 == evenOrOdd)
+                {
+                    minValue = i;
+                    counter++;
+                }
+            }
+
+            if (counter != 0)
+            {
+                Console.WriteLine(minValue);
+            }
+            else
+            {
+                Console.WriteLine(noMatch);
+            }
+            //return minValue;
+        }
+
+        private static void GetFirstCountIndex(int[] numbers, int evenOrOddPosition, int count)
+        {
+            int[] firstCountElements = new int[count];
+            int counter = 0;
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] % 2 == evenOrOddPosition)
+                {
+                    firstCountElements[counter] = numbers[i];
+                    counter++;
+                    if (counter == count)
+                    {
+                        //return firstCountElements;
+                        Console.Write("[");
+                        Console.Write(string.Join(",", firstCountElements));
+                        Console.Write("]");
+                        Console.WriteLine();
+                        break;
+                    }
+                }
+            }
+            Console.WriteLine(string.Join(",", firstCountElements));
+            //return firstCountElements;
+        }
+
+        private static void GetLastCountIndex(int[] numbers, int evenOrOddPosition, int count)
+        {
+            int[] lastCountElements = new int[count];
+            int counter = 0;
+
+            for (int i = numbers.Length - 1; i >= 0; i--)
+            {
+                if (numbers[i] % 2 == evenOrOddPosition)
+                {
+                    lastCountElements[counter] = numbers[i];
+                    counter++;
+                    if (counter == count)
+                    {
+                        Console.Write("[");
+                        Console.Write(string.Join(",", lastCountElements));
+                        Console.Write("]");
+                        Console.WriteLine();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
