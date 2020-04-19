@@ -1,0 +1,68 @@
+using System;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Transactions;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //int arrayElements = int.Parse(Console.ReadLine());
+            int[] numbers = new int[3];
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                numbers[i] = int.Parse(Console.ReadLine());
+            }
+
+            Console.WriteLine(CheckPositiveOrNegative(numbers));
+
+        }
+
+        static string CheckPositiveOrNegative(int[] numbers)
+        {
+            string positive = "positive";
+            string negative = "negative";
+            string zero = "zero";
+
+            int zeroIndex = 0;
+            int positiveIndex = 0;
+            int negativeIndex = 0;
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] == 0)
+                {
+                    zeroIndex++;
+                }
+                if (numbers[i] < 0)
+                {
+                    negativeIndex++;
+                }
+                else if (numbers[i] > 0)
+                {
+                    positiveIndex++;
+                }
+            }
+
+            if (zeroIndex >= 1)
+            {
+                return zero;
+            }
+            else if (positiveIndex == 3 || positiveIndex == 1)
+            {
+                return positive;
+            }
+            else
+            {
+                return negative;
+            }
+        }
+    }
+}
