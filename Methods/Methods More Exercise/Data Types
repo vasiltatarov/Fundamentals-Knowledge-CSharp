@@ -1,0 +1,40 @@
+using System;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Runtime.ExceptionServices;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Transactions;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] command = Console.ReadLine().Split(" ").ToArray();
+
+            GetTypes(command);
+        }
+
+        static void GetTypes(string[] command)
+        {
+            if (command[0] == "int")
+            {
+                int number = int.Parse(Console.ReadLine());
+                Console.WriteLine(number * 2);
+            }
+            else if (command[0] == "real")
+            {
+                double number = double.Parse(Console.ReadLine());
+                Console.WriteLine($"{number * 1.5:F2}");
+            }
+            else if (command[0] == "string")
+            {
+                string text = Console.ReadLine();
+                Console.WriteLine($"${text}$");
+            }
+        }
+    }
+}
