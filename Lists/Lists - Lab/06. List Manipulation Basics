@@ -1,0 +1,68 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading;
+using System.Net.Security;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        static void Main()
+        {
+            List<int> numbers = Console.ReadLine().Split().Select(int.Parse).ToList();
+
+            while (true)
+            {
+                List<string> command = Console.ReadLine().Split().ToList();
+
+                if (command[0] == "end")
+                {
+                    Console.WriteLine(string.Join(" ", numbers));
+                    return;
+                }
+                else if (command[0] == "Add")
+                {
+                    int number = int.Parse(command[1]);
+                    AddNumber(numbers, number);
+                }
+                else if (command[0] == "Remove")
+                {
+                    int number = int.Parse(command[1]);
+                    RemoveNumber(numbers, number);
+                }
+                else if (command[0] == "RemoveAt")
+                {
+                    int number = int.Parse(command[1]);
+                    RemoveAtNumber(numbers, number);
+                }
+                else if (command[0] == "Insert")
+                {
+                    int number = int.Parse(command[1]);
+                    int index = int.Parse(command[2]);
+                    InsertNumberIndex(numbers, number, index);
+                }
+            }
+        }
+
+        private static void AddNumber(List<int> numbers, int number)
+        {
+            numbers.Add(number);
+        }
+
+        private static void RemoveNumber(List<int> numbers, int number)
+        {
+            numbers.Remove(number);
+        }
+
+        private static void RemoveAtNumber(List<int> numbers, int number)
+        {
+            numbers.RemoveAt(number);
+        }
+
+        private static void InsertNumberIndex(List<int> numbers, int number, int index)
+        {
+            numbers.Insert(index, number);
+        }
+    }
+}
