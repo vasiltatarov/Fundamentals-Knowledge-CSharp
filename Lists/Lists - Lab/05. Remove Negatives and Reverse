@@ -1,0 +1,40 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading;
+using System.Net.Security;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        static void Main()
+        {
+            List<int> numbers = Console.ReadLine().Split().Select(int.Parse).ToList();
+
+            RemoveNegative(numbers);
+        }
+
+        private static void RemoveNegative(List<int> numbers)
+        {
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                if (numbers[i] < 0)
+                {
+                    numbers.RemoveAt(i);
+                    i -= 1;
+                }
+            }
+
+            if (numbers.Count == 0)
+            {
+                Console.WriteLine("empty");
+                return;
+            }
+
+            numbers.Reverse();
+
+            Console.WriteLine(string.Join(" ", numbers));
+        }
+    }
+}
