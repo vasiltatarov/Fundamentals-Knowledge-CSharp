@@ -1,0 +1,94 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading;
+using System.Net.Security;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        static void Main()
+        {
+            List<int> distanceToPokemons = Console.ReadLine().Split(" ").Select(int.Parse).ToList();
+
+            List<int> sumOfElements = new List<int>();
+
+            while (distanceToPokemons.Count > 0)
+            {
+                int index = int.Parse(Console.ReadLine());
+
+                RemoveIndex(distanceToPokemons, index, sumOfElements);
+            }
+
+            Console.WriteLine(string.Join("", sumOfElements.Sum()));
+        }
+
+        private static void RemoveIndex(List<int> distanceToPokemons, int index, List<int> sumOfElements)
+        {
+            if (index < 0)
+            {
+                int firstIndex = distanceToPokemons[0];
+
+                sumOfElements.Add(firstIndex);
+
+                for (int i = 0; i < distanceToPokemons.Count; i++)
+                {
+                    if (distanceToPokemons[i] <= firstIndex)
+                    {
+                        distanceToPokemons[i] += firstIndex;
+                    }
+                    else if (distanceToPokemons[i] > firstIndex)
+                    {
+                        distanceToPokemons[i] -= firstIndex;
+                    }
+                }
+
+                return;
+            }
+            else if (index > distanceToPokemons.Count - 1)
+            {
+                int lastIndex = distanceToPokemons[distanceToPokemons.Count - 1];
+
+                sumOfElements.Add(lastIndex);
+
+                for (int i = 0; i < distanceToPokemons.Count; i++)
+                {
+                    if (distanceToPokemons[i] <= lastIndex)
+                    {
+                        distanceToPokemons[i] += lastIndex;
+                    }
+                    else if (distanceToPokemons[i] > lastIndex)
+                    {
+                        distanceToPokemons[i] -= lastIndex;
+                    }
+                }
+
+                return;
+                //Console.WriteLine(string.Join(" ", distanceToPokemons));
+            }
+            else
+            {
+                int currentValue = distanceToPokemons[index];
+
+                sumOfElements.Add(currentValue);
+                distanceToPokemons.RemoveAt(index);
+
+                for (int i = 0; i < distanceToPokemons.Count; i++)
+                {
+                    if (distanceToPokemons[i] <= currentValue)
+                    {
+                        distanceToPokemons[i] += currentValue;
+                    }
+                    else if (distanceToPokemons[i] > currentValue)
+                    {
+                        distanceToPokemons[i] -= currentValue;
+                    }
+                }
+
+                return;
+                //Console.WriteLine(string.Join(" ", distanceToPokemons));
+            }
+        }
+    }
+}
