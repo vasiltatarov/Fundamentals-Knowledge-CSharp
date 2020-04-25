@@ -1,0 +1,91 @@
+static void Main()
+        {
+            List<int> numbers = Console.ReadLine().Split().Select(int.Parse).ToList();
+
+            while (true)
+            {
+                List<string> command = Console.ReadLine().Split().ToList();
+
+                if (command[0] == "End")
+                {
+                    Console.WriteLine(string.Join(" ", numbers));
+                    return;
+                }
+                else if (command[0] == "Add")
+                {
+                    AddNumber(numbers, command);
+                }
+                else if (command[0] == "Remove")
+                {
+                    RemoveNumber(numbers, command);
+                }
+                else if (command[0] == "Insert")
+                {
+                    InsertNumber(numbers, command);
+                }
+                else if (command[0] == "Shift")
+                {
+                    GetShiftLeftOrRight(numbers, command);
+                } 
+            }
+        }
+
+        static void GetShiftLeftOrRight(List<int> numbers, List<string> command)
+        {
+            int count = int.Parse(command[2]);
+
+            if (command[1] == "left")
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    numbers.Add(numbers[0]);
+                    numbers.Remove(numbers[0]);
+                }
+            }
+            else if (command[1] == "right")
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    numbers.Insert(0, numbers[numbers.Count - 1]);
+                    numbers.RemoveAt(numbers.Count - 1);
+                }
+            }
+        }
+
+        static void InsertNumber(List<int> numbers, List<string> command)
+        {
+            int number = int.Parse(command[1]);
+            int index = int.Parse(command[2]);
+
+            if (index < 0 || index >= numbers.Count)
+            {
+                Console.WriteLine("Invalid index");
+                return;
+            }
+            else
+            {
+                numbers.Insert(index, number);
+            }
+        }
+
+        static void AddNumber(List<int> numbers, List<string> command)
+        {
+            int number = int.Parse(command[1]);
+
+            numbers.Add(number);
+        }
+
+        static void RemoveNumber(List<int> numbers, List<string> command)
+        {
+            int index = int.Parse(command[1]);
+
+            if (index < 0 || index >= numbers.Count)
+            {
+                Console.WriteLine("Invalid index");
+                return;
+            }
+            else
+            {
+                numbers.RemoveAt(index);
+            }
+        }
