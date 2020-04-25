@@ -1,0 +1,36 @@
+static void Main()
+        {
+            List<int> numbers = Console.ReadLine().Split(" ").Select(int.Parse).ToList();
+            List<int> specialBombNumbers = Console.ReadLine().Split(" ").Select(int.Parse).ToList();
+
+            int bomb = specialBombNumbers[0];
+            int power = specialBombNumbers[1];
+
+            while (numbers.Contains(bomb))
+            {
+                int index = numbers.IndexOf(bomb);
+
+                if (index < power)
+                {
+                    numbers.RemoveRange(0, index);
+                }
+                else
+                {
+                    numbers.RemoveRange(index - power, power);
+                }
+
+                index = numbers.IndexOf(bomb);
+
+                if (index + power + 1 < numbers.Count)
+                {
+                    numbers.RemoveRange(index, power + 1);
+                }
+                else
+                {
+                    numbers.RemoveRange(index, numbers.Count - index);
+                }
+
+            }
+
+            Console.WriteLine(string.Join(" ", numbers.Sum()));
+        }
