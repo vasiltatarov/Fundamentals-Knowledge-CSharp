@@ -1,0 +1,54 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading;
+using System.Net.Security;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        static void Main()
+        {
+            List<int> listOfNumbers = Console.ReadLine().Split().Select(int.Parse).ToList();
+
+            while (true)
+            {
+                List<string> command = Console.ReadLine().Split().ToList();
+
+                if (command[0] == "end")
+                {
+                    Console.WriteLine(string.Join(" ", listOfNumbers));
+                    return;
+                }
+                else if (command[0] == "Delete")
+                {
+                    int element = int.Parse(command[1]);
+
+                    DeleteElement(listOfNumbers, element);
+                }
+                else if (command[0] == "Insert")
+                {
+                    int element = int.Parse(command[1]);
+
+                    int position = int.Parse(command[2]);
+
+                    InsertElement(listOfNumbers, element, position);
+                }
+            }
+        }
+
+        static void InsertElement(List<int> listOfNumbers, int element, int position)
+        {
+            listOfNumbers.Insert(position, element);
+        }
+
+        static void DeleteElement(List<int> listOfNumbers, int element)
+        {
+            for (int i = 0; i < listOfNumbers.Count; i++)
+            {
+                listOfNumbers.Remove(element);
+            }
+        }
+    }
+}
