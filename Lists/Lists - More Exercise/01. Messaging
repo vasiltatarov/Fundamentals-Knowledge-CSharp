@@ -1,0 +1,48 @@
+        static void Main()
+        {
+            List<int> numbers = Console.ReadLine().Split(" ").Select(int.Parse).ToList();
+            
+            string text = Console.ReadLine();
+            
+            List<char> result = new List<char>();
+
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                int currentElement = numbers[i];
+                int currentSum = 0;
+
+                while (currentElement > 0)
+                {
+                    int lastDigit = currentElement % 10;
+                    currentSum += lastDigit;
+                    currentElement /= 10;
+                }
+
+                for (int j = 0; j < text.Length; j++)
+                {
+                    if (currentSum == j)
+                    {
+                        result.Add(text[j]);
+                        text = text.Remove(1, 1);
+                        break;
+                    }
+                    else if (currentSum >= text.Length)
+                    {
+                        int diff = currentSum - (text.Length);
+
+                        for (int k = 0; k < text.Length; k++)
+                        {
+                            if (diff == k)
+                            {
+                                result.Add(text[k]);
+                                text = text.Remove(diff, diff);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+
+            Console.WriteLine(string.Join("", result));
+        }
