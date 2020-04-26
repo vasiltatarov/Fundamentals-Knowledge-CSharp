@@ -1,0 +1,102 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading;
+using System.Net.Security;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        static void Main()
+        {
+            List<int> firstLine = Console.ReadLine().Split(" ").Select(int.Parse).ToList();
+
+            List<int> secondLine = Console.ReadLine().Split(" ").Select(int.Parse).ToList();
+
+            if (Math.Abs(firstLine.Count - secondLine.Count) == 2)
+            {
+                MixedLists(firstLine, secondLine);
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        static void MixedLists(List<int> firstLine, List<int> secondLine)
+        {
+            if (firstLine.Count > secondLine.Count)
+            {
+                List<int> result = new List<int>();
+
+                int lastElement = firstLine[Math.Max(firstLine.Count, secondLine.Count) - 1];
+                int beforeLastElement = firstLine[Math.Max(firstLine.Count, secondLine.Count) - 2];
+
+                for (int i = 0; i < firstLine.Count; i++)
+                {
+                    result.Add(firstLine[i]);
+                }
+
+                int counter = 1;
+
+                for (int i = secondLine.Count - 1; i >= 0; i--)
+                {
+                    result.Insert(counter, secondLine[i]);
+                    counter += 2;
+                }
+
+                List<int> results = new List<int>();
+
+                for (int i = 0; i < result.Count; i++)
+                {
+                    if (result[i] > Math.Min(lastElement, beforeLastElement) && result[i] < Math.Max(lastElement, beforeLastElement))
+                    {
+                        results.Add(result[i]);
+                    }
+                }
+
+                results.Sort();
+
+                Console.WriteLine(string.Join(" ", results));
+                return;
+            }
+            else
+            {
+                List<int> result = new List<int>();
+
+                int lastElement = secondLine[0];
+                int beforeLastElement = secondLine[1];
+
+                for (int i = 0; i < firstLine.Count; i++)
+                {
+                    result.Add(firstLine[i]);
+                }
+
+                int counter = 1;
+
+                for (int i = secondLine.Count - 1; i >= 2; i--)
+                {
+                    result.Insert(counter, secondLine[i]);
+                    counter += 2;
+                }
+
+                List<int> results = new List<int>();
+
+                for (int i = 0; i < result.Count; i++)
+                {
+                    if (result[i] > Math.Min(lastElement, beforeLastElement) && result[i] < Math.Max(lastElement, beforeLastElement))
+                    {
+                        results.Add(result[i]);
+                    }
+                }
+
+                results.Sort();
+
+                Console.WriteLine(string.Join(" ", results));
+                return;
+            }
+            
+        }
+    }
+}
