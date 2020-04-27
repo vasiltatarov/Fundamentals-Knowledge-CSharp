@@ -1,0 +1,27 @@
+static void Main()
+        {
+            int number = int.Parse(Console.ReadLine());
+
+            int binaryDigit = int.Parse(Console.ReadLine());
+
+            int binaryDigitsSum = 0;
+
+            List<int> binaryNum = new List<int>();
+
+            while (number > 0)
+            {
+                binaryNum.Add(number % 2);
+
+                if (binaryDigit == number % 2)
+                {
+                    binaryDigitsSum++;
+                }
+
+                number /= 2;
+            }
+            Console.WriteLine(binaryDigitsSum);
+
+            binaryNum.Reverse();
+
+            //Console.WriteLine(string.Join("", binaryNum));
+        }
