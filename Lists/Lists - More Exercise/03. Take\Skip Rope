@@ -1,0 +1,69 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Threading;
+using System.Net.Security;
+using System.Text.RegularExpressions;
+using System.Numerics;
+using System.Text;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        static void Main()
+        {
+            string message = Console.ReadLine(); //   skipTest_String044170
+
+            DecryptedMessage(message);
+        }
+
+        static void DecryptedMessage(string message)
+        {
+            List<int> numberList = new List<int>();
+            List<string> nonNumberList = new List<string>();
+            List<int> takeList = new List<int>(); // even
+            List<int> skipList = new List<int>(); // odd
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < message.Length; i++)
+            {
+                if (char.IsDigit(message[i]))
+                {
+                    numberList.Add(int.Parse(message[i].ToString()));
+                }
+                else
+                {
+                    nonNumberList.Add(message[i].ToString());
+                }
+            }
+
+            for (int i = 0; i < numberList.Count; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    takeList.Add(numberList[i]);
+                }
+                else if (i % 2 == 1)
+                {
+                    skipList.Add(numberList[i]);
+                }
+            }
+
+            int indexForSkip = 0;
+
+            for (int i = 0; i < takeList.Count; i++)
+            {
+                List<string> current = new List<string>(nonNumberList);
+
+                current = current.Skip(indexForSkip).Take(takeList[i]).ToList();
+
+                result.Append(string.Join("", current));
+
+                indexForSkip += takeList[i] + skipList[i];
+            }
+            Console.WriteLine(result.ToString());
+            return;
+        }
+    }
+}
