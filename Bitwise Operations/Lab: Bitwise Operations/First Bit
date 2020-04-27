@@ -1,0 +1,15 @@
+static void Main()
+        {
+            int number = int.Parse(Console.ReadLine());
+
+            List<int> binaryNum = new List<int>();
+
+            while (number > 0)
+            {
+                binaryNum.Add(number % 2);
+
+                number /= 2;
+            }
+
+            Console.WriteLine(binaryNum[1]);
+        }
