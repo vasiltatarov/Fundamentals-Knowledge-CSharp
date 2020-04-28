@@ -1,0 +1,13 @@
+        static void Main()
+        {
+            int n = int.Parse(Console.ReadLine());
+
+            BigInteger facturialOfN = 1;
+
+            for (int i = 1; i <= n; i++)
+            {
+                facturialOfN *= i;
+            }
+
+            Console.WriteLine(facturialOfN);
+        }
