@@ -1,0 +1,21 @@
+        static void Main()
+        {
+            Random rnd = new Random();
+
+            var words = Console.ReadLine().Split(" ").ToList();  
+
+            for (int i = 0; i < words.Count; i++)
+            {
+                var numberAtRandomPosition = rnd.Next(words.Count);
+
+                var randomElement = words[numberAtRandomPosition];
+                var element = words[i];
+
+                words[numberAtRandomPosition] = element;
+                words[i] = randomElement;
+            }
+            foreach (var item in words)
+            {
+                Console.WriteLine(item);
+            }
+        }
