@@ -1,0 +1,8 @@
+        static void Main()
+        {
+            var date = Console.ReadLine();
+
+            DateTime getDayOfWeek = DateTime.ParseExact(date, "d-M-yyyy", CultureInfo.InvariantCulture);
+
+            Console.WriteLine(getDayOfWeek.DayOfWeek);
+        }
