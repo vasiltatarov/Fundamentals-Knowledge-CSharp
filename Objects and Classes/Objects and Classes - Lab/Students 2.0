@@ -1,0 +1,80 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Xml.Schema;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        public class Student
+        {
+            public string FirstName { get; set; }
+
+            public string LastName { get; set; }
+
+            public int Age { get; set; }
+
+            public string City { get; set; }
+        }
+
+        static void Main()
+        {
+            List<Student> students = new List<Student>();
+
+            string command = Console.ReadLine();
+            while (command != "end")
+            {
+                string[] studentInfo = command.Split(" ");
+
+                string firstName = studentInfo[0];
+                string lastName = studentInfo[1];
+                int age = int.Parse(studentInfo[2]);
+                string city = studentInfo[3];
+
+                if (IsStudentExisting(students, firstName, lastName, age))
+                {
+                    
+                }
+                else
+                {
+                    Student student = new Student()
+                    {
+                        FirstName = firstName,
+                        LastName = lastName,
+                        Age = age,
+                        City = city,
+                    };
+
+                    students.Add(student);
+                }
+
+                command = Console.ReadLine();
+            }
+
+            string town = Console.ReadLine();
+
+            foreach (Student student in students)
+            {
+                if (town == student.City)
+                {
+                    Console.WriteLine($"{student.FirstName} {student.LastName} is {student.Age} years old.");
+                }
+            }
+        }
+
+        public static bool IsStudentExisting(List<Student> students, string firstName, string lastName, int age)
+        {
+            foreach (Student student in students)
+            {
+                if (student.FirstName == firstName && student.LastName == lastName)
+                {
+                    student.Age = age;
+                    return true;
+                }
+            }
+
+            return false;
+        } 
+    }
+}
