@@ -1,0 +1,80 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Xml.Schema;
+using System.Data;
+
+namespace RealWorldExample
+{
+    class Program
+    {
+        //public class Item
+        //{
+        //    public string Name { get; set; }
+        //    public double Price { get; set; }
+        //}
+
+        public class Box
+        {
+            //public Box ()
+            //{
+            //    Item = new Item();
+            //}
+
+            public long SerialNumber { get; set; }
+            public string Item { get; set; }
+            public int ItemQuantity { get; set; }
+            public double PriceForBox { get; set; }
+            public double TotalPrice { get; set; }
+        }
+
+        static void Main()
+        {
+            List<Box> boxes = new List<Box>();
+
+            string command = Console.ReadLine();
+            while (command != "end")
+            {
+                string[] data = command.Split(" ");
+
+                long serialNumber = long.Parse(data[0]);
+                string itemName = data[1];
+                int quantity = int.Parse(data[2]);
+                double itemPrice = double.Parse(data[3]);
+
+                //Item item = new Item()
+                //{
+                //    Name = itemName,
+                //    Price = itemPrice,
+                //};
+
+                Box box = new Box()
+                {
+                    SerialNumber = serialNumber,
+                    Item = itemName,
+                    ItemQuantity = quantity,
+                    //PriceForBox = itemPrice * quantity,
+                    PriceForBox = itemPrice,
+                    TotalPrice = itemPrice * (quantity * 1.0),
+                };
+
+                boxes.Add(box);
+
+                command = Console.ReadLine();
+            }
+
+            //boxes.OrderBy(boxes => boxes.TotalPrice).ToList();
+            //boxes.OrderBy(box => box.TotalPrice).ToList();
+            List<Box> sortedBox = boxes.OrderBy(boxes => boxes.TotalPrice).ToList();
+
+            sortedBox.Reverse();
+
+            foreach (Box box in sortedBox)
+            {
+                Console.WriteLine($"{box.SerialNumber}");
+                Console.WriteLine($"-- {box.Item} - ${box.PriceForBox:F2}: {box.ItemQuantity}");
+                Console.WriteLine($"-- ${box.TotalPrice:F2}");
+            }
+        }
+    }
+}
