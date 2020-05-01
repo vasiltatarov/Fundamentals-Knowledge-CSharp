@@ -1,0 +1,128 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ObjectAndClasses
+{
+    class Program
+    {
+        static void Main()
+        {
+            int countOfTeamsToRegister = int.Parse(Console.ReadLine());
+
+            List<Team> teams = new List<Team>();
+
+            for (int i = 0; i < countOfTeamsToRegister; i++)
+            {
+                string[] teamInfo = Console.ReadLine().Split("-");
+                string creator = teamInfo[0];
+                string teamName = teamInfo[1];
+
+                Team excistingTeamName = teams.Find(t => t.TeamName == teamName);
+                if (excistingTeamName != null)
+                {
+                    Console.WriteLine($"Team {teamName} was already created!");
+                    continue;
+                }
+
+                Team excistingCreator = teams.Find(c => c.Creator == creator);
+                if (excistingCreator != null)
+                {
+                    Console.WriteLine($"{creator} cannot create another team!");
+                    continue;
+                }
+
+                Team team = new Team(creator, teamName);
+
+                teams.Add(team);
+
+                Console.WriteLine($"Team {team.TeamName} has been created by {team.Creator}!");
+            }
+
+            string command = Console.ReadLine();
+            while (command != "end of assignment")
+            {
+                string[] joinInTeam = command.Split("->");
+
+                string member = joinInTeam[0];
+                string teamName = joinInTeam[1];
+
+                Team excistingTeam = (teams.Find(teams => teams.TeamName == teamName));
+                if (excistingTeam == null)
+                {
+                    Console.WriteLine($"Team {teamName} does not exist!");
+                    command = Console.ReadLine();
+                    continue;
+                }
+
+                Team excistingTeamMember = teams.Find(teams => teams.Members.Contains(member) || teams.Creator == member);
+
+                if (excistingTeamMember != null)
+                {
+                    Console.WriteLine($"Member {member} cannot join team {teamName}!");
+                    command = Console.ReadLine();
+                    continue;
+                }
+
+                excistingTeam.Members.Add(member);
+
+                command = Console.ReadLine();
+            }
+
+            List<string> disbandingTeams = teams.Where(t => t.Members.Count == 0)
+                .OrderBy(t => t.TeamName)
+                .Select(t => t.TeamName)
+                .ToList();
+
+            teams.RemoveAll(t => t.Members.Count == 0);
+
+            List<Team> sortedTeams = teams.OrderByDescending(t => t.Members.Count)
+                .ThenBy(t => t.TeamName)
+                .ToList();
+
+            foreach (Team item in sortedTeams)
+            {
+                Console.WriteLine(item);
+            }
+
+            Console.WriteLine("Teams to disband:");
+
+            foreach (string item in disbandingTeams)
+            {
+                Console.WriteLine(item);
+            }
+        }
+    }
+
+    class Team
+    {
+        public string Creator { get; set; }
+        public string TeamName { get; set; }
+        public List<string> Members { get; set; }
+
+        public Team(string creator, string teamName)
+        {
+            this.Creator = creator;
+            this.TeamName = teamName;
+
+            this.Members = new List<string>();
+        }
+
+        public override string ToString()
+        {
+            //return $"Team {this.TeamName} has been created by {this.Creator}!";
+
+            List<string> sortedMembers = this.Members.OrderBy(a => a).ToList();
+
+            string output = $"{this.TeamName}\n";
+            output += $"- {this.Creator}\n";
+
+            for (int i = 0; i < sortedMembers.Count; i++)
+            {
+                output += $"-- {sortedMembers[i]}\n";
+            }
+
+            return output.Trim();
+        }
+    }
+}
