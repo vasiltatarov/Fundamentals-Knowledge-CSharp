@@ -1,0 +1,38 @@
+        static void Main()
+        {
+            int daysOfAdventures = int.Parse(Console.ReadLine());
+            int countOfPeople = int.Parse(Console.ReadLine());
+            double groupEnergy = double.Parse(Console.ReadLine());
+            double waterPerDayForOnePerson = double.Parse(Console.ReadLine());
+            double foodPerDayForOnePerson = double.Parse(Console.ReadLine());
+
+            double allFood = daysOfAdventures * countOfPeople * foodPerDayForOnePerson;
+            double allWater = daysOfAdventures * countOfPeople * waterPerDayForOnePerson;
+
+            for (int i = 1; i <= daysOfAdventures; i++)
+            {
+                double energyLoss = double.Parse(Console.ReadLine());
+
+                groupEnergy -= energyLoss;
+
+                if (groupEnergy <= 0)
+                {
+                    Console.WriteLine($"You will run out of energy. You will be left with {allFood:F2} food and {allWater:F2} water.");
+                    return;
+                }
+
+                if (i % 2 == 0)
+                {
+                    groupEnergy *= 1.05;
+                    allWater *= 0.70;
+                }
+
+                if (i % 3 == 0)
+                {
+                    groupEnergy *= 1.10;
+                    allFood -= allFood / (countOfPeople * 1.0);
+                }
+            }
+
+            Console.WriteLine($"You are ready for the quest. You will be left with - {groupEnergy:f2} energy!");
+        }
