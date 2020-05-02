@@ -1,0 +1,129 @@
+using System;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
+
+namespace ObjectAndClasses
+{
+    class Program
+    {
+        static void Main()
+        {
+            List<Vehicle> cars = new List<Vehicle>();
+
+            List<Vehicle> trucks = new List<Vehicle>();
+
+            string line = Console.ReadLine();
+            while (line != "End")
+            {
+                string[] input = line.Split(" ");
+                string type = input[0];
+                string model = input[1];
+                string color = input[2];
+                int horsePower = int.Parse(input[3]);
+
+                Vehicle excistingCarModel = cars.Find(c => c.Model == model);
+                Vehicle excistingTruckModel = trucks.Find(c => c.Model == model);
+
+                if (excistingCarModel != null)
+                {
+                    line = Console.ReadLine();
+                    continue;
+                }
+
+                if (excistingTruckModel != null)
+                {
+                    line = Console.ReadLine();
+                    continue;
+                }
+
+                Vehicle car = new Vehicle(type, model, color, horsePower);
+
+                Vehicle truck = new Vehicle(type, model, color, horsePower);
+
+                if (type == "car")
+                {
+                    cars.Add(car);
+                }
+                else if (type == "truck")
+                {
+                    trucks.Add(truck);
+                }
+
+                line = Console.ReadLine();
+            }
+
+            string modelOfVehicle = Console.ReadLine();
+            while (modelOfVehicle != "Close the Catalogue")
+            {
+                Vehicle excistingCarModel = cars.Find(c => c.Model == modelOfVehicle);
+
+                Vehicle excistingTruckModel = trucks.Find(t => t.Model == modelOfVehicle);
+
+                foreach (Vehicle car in cars)
+                {
+                    if (excistingCarModel != null)
+                    {
+                        if (car.Model == modelOfVehicle)
+                        {
+                            Console.WriteLine($"Type: Car\nModel: {car.Model}\nColor: {car.Color}\nHorsepower: {car.HorsePower}");
+                            break;
+                        }
+                    }
+                }
+
+                foreach (Vehicle truck in trucks)
+                {
+                    if (excistingTruckModel != null)
+                    {
+                        if (truck.Model == modelOfVehicle)
+                        {
+                            Console.WriteLine($"Type: Truck\nModel: {truck.Model}\nColor: {truck.Color}\nHorsepower: {truck.HorsePower}");
+                            break;
+                        }
+                    }
+                }
+
+                modelOfVehicle = Console.ReadLine();
+            }
+
+            double averageCarHorsePowerSum = 0;
+            double averageTruckHorsePowerSum = 0;
+
+            foreach (Vehicle horsePower in cars)
+            {
+                averageCarHorsePowerSum += horsePower.HorsePower;
+            }
+
+            foreach (Vehicle horsePower in trucks)
+            {
+                averageTruckHorsePowerSum += horsePower.HorsePower;
+            }
+
+            Console.WriteLine($"Cars have average horsepower of: {averageCarHorsePowerSum / cars.Count:F2}.");
+            Console.WriteLine($"Trucks have average horsepower of: {averageTruckHorsePowerSum / trucks.Count:F2}.");
+        }
+    }
+
+    class Vehicle
+    {
+        public string Type { get; set; }
+        public string Model { get; set; }
+        public string Color { get; set; }
+        public int HorsePower { get; set; }
+
+
+        public Vehicle(string type, string model, string color, int horsePower)
+        {
+            this.Type = type;
+            this.Model = model;
+            this.Color = color;
+            this.HorsePower = horsePower;
+        }
+
+        //public override string ToString()
+        //{
+        //    return $"Type: {this.Type}\nModel: {this.Model}\nColor: {this.Color}\nHorsepower: {this.HorsePower}";
+        //}
+    }
+}
