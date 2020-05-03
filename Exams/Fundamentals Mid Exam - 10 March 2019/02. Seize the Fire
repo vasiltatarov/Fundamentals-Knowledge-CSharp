@@ -1,0 +1,78 @@
+using System;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
+
+namespace ObjectAndClasses
+{
+    class Program
+    {
+        static void Main()
+        {
+            List<string> fireLevel = Console.ReadLine().Split("#").ToList(); //High = 89#Low = 28#Medium = 77#Low = 23
+            
+            int water = int.Parse(Console.ReadLine()); // 1250
+
+            double totalEffort = 0;
+            int totalFire = 0;
+            List<int> cells = new List<int>();
+
+            for (int i = 0; i < fireLevel.Count; i++)
+            {
+                string[] fireArgs = fireLevel[i].Split(" = ");
+                int currentValue = int.Parse(fireArgs[1]);
+
+                if (IsValid(fireArgs))
+                {
+                    if (currentValue <= water)
+                    {
+                        water -= currentValue;
+                        totalFire += currentValue;
+                        totalEffort += (currentValue * 1.0) * 25 / 100;
+                        cells.Add(currentValue);
+                    }
+                }
+            }
+
+            Console.WriteLine("Cells:");
+
+            foreach (var cell in cells)
+            {
+                Console.WriteLine($" - {cell}");
+            }
+
+            Console.WriteLine($"Effort: {totalEffort:f2}");
+            Console.WriteLine($"Total Fire: {totalFire}");
+        }
+
+        static bool IsValid(string[] fireArgs)
+        {
+            string typeOfFire = fireArgs[0];
+            int valueOfCell = int.Parse(fireArgs[1]);
+
+            if (typeOfFire == "High")
+            {
+                if (valueOfCell >= 81 && valueOfCell <= 125)
+                {
+                    return true;
+                }
+            }
+            else if (typeOfFire == "Medium")
+            {
+                if (valueOfCell >= 51 && valueOfCell <= 80)
+                {
+                    return true;
+                }
+            }
+            else if (typeOfFire == "Low")
+            {
+                if (valueOfCell >= 1 && valueOfCell <= 50)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+}
