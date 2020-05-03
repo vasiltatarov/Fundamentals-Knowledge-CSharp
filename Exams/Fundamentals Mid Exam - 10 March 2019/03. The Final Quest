@@ -1,0 +1,117 @@
+using System;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
+
+namespace ObjectAndClasses
+{
+    class Program
+    {
+        static void Main()
+        {
+            List<string> message = Console.ReadLine().Split(" ").ToList();
+
+            string command = Console.ReadLine();
+            while (command != "Stop")
+            {
+                string[] line = command.Split(" ");
+
+                if (line[0] == "Delete")
+                {
+                    GetDelete(message, line);
+                }
+                else if (line[0] == "Swap")
+                {
+                    GetSwap(message, line);
+                }
+                else if (line[0] == "Put")
+                {
+                    GetPut(message, line);
+                }
+                else if (line[0] == "Sort")
+                {
+                    GetSort(message, line);
+                }
+                else if (line[0] == "Replace")
+                {
+                    GetReplace(message, line);
+                }
+
+                command = Console.ReadLine();
+            }
+
+            Console.WriteLine(string.Join(" ", message));
+        }
+
+        public static void GetSort(List<string> message, string[] line)
+        {
+            //message.OrderByDescending(x => x);
+
+            message.Sort();
+            message.Reverse();
+
+            return;
+        }
+
+        public static void GetReplace(List<string> message, string[] line)
+        {
+            string firstWord = line[1];
+            string secondWord = line[2];
+
+            if (message.Contains(secondWord))
+            {
+                int indexOfSecondWord = message.IndexOf(secondWord);
+
+                message[indexOfSecondWord] = firstWord;
+                return;    // DONT FORGET TO RETURN......
+            }
+
+            return;
+        }
+
+        public static void GetPut(List<string> message, string[] line)
+        {
+            string word = line[1];
+            int index = int.Parse(line[2]) - 1;
+
+            if (index >= 0 && index <= message.Count)
+            {
+                message.Insert(index, word);
+                return;
+            }
+
+            return;
+        }
+
+        public static void GetSwap(List<string> message, string[] line)
+        {
+            string word1 = line[1];
+            string word2 = line[2];
+
+            if (message.Contains(word1) && message.Contains(word2))
+            {
+                int indexOfWord1 = message.IndexOf(word1);
+                int indexOfWord2 = message.IndexOf(word2);
+
+                message[indexOfWord1] = word2;
+                message[indexOfWord2] = word1;
+                return;
+            }
+
+            return;
+        }
+
+        public static void GetDelete(List<string> message, string[] line)
+        {
+            int index = int.Parse(line[1]) + 1;
+
+            if (index >= 0 && index < message.Count)
+            {
+                message.RemoveAt(index);
+                return;   // DONT FORGET TO RETURN......
+            }
+
+            return;
+        }
+    }
+}
