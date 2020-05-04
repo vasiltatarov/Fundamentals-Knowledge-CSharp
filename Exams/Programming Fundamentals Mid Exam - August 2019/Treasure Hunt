@@ -1,0 +1,104 @@
+        static void Main()
+        {
+            List<string> loots = Console.ReadLine().Split("|").ToList();
+
+            string command = Console.ReadLine();
+            while (command != "Yohoho!")
+            {
+                string[] line = command.Split(" ");
+
+                if (line[0] == "Loot")
+                {
+                    GetInsert(loots, line);
+                }
+                else if (line[0] == "Drop")
+                {
+                    GetRemove(loots, line);
+                }
+                else if (line[0] == "Steal")
+                {
+                    GetSteal(loots, line);
+                }
+
+                command = Console.ReadLine();
+            }
+
+            double sumOfAllWords = 0;
+
+            if (loots.Count > 0)
+            {
+                for (int i = 0; i < loots.Count; i++)
+                {
+                    int currentWord = loots[i].Length;
+                    sumOfAllWords += currentWord;
+                }
+
+                Console.WriteLine($"Average treasure gain: {sumOfAllWords / loots.Count:F2} pirate credits.");
+            }
+            else
+            {
+                Console.WriteLine("Failed treasure hunt.");
+            }
+        }
+
+        static void GetSteal(List<string> loots, string[] line)
+        {
+            int count = int.Parse(line[1]);
+            List<string> stolenLoots = new List<string>(loots);
+
+            stolenLoots.Reverse();
+
+            for (int i = count; i < stolenLoots.Count; i++)
+            {
+                stolenLoots.Remove(stolenLoots[i]);
+                i--;
+            }
+
+            stolenLoots.Reverse();
+            Console.WriteLine(string.Join(", ", stolenLoots));
+
+            for (int i = 0; i < stolenLoots.Count; i++)
+            {
+                if (loots.Contains(stolenLoots[i]))
+                {
+                    loots.Remove(stolenLoots[i]);
+                }
+            }
+
+            return;
+        }
+
+        static void GetRemove(List<string> loots, string[] line)
+        {
+            int index = int.Parse(line[1]);
+
+            if (index >= 0 && index < loots.Count)
+            {
+                string currentElement = loots[index];
+
+                loots.RemoveAt(index);
+                loots.Add(currentElement);
+
+                return;
+            }
+
+            return;
+        }
+
+        static void GetInsert(List<string> loots, string[] line)
+        {
+            for (int i = 1; i < line.Length; i++)
+            {
+                if (loots.Contains(line[i]))
+                {
+                    continue;
+                }
+                else
+                {
+                    loots.Insert(0, line[i]);
+                    continue;
+                }
+            }
+
+            return;
+        }
