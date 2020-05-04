@@ -1,0 +1,118 @@
+        static void Main()
+        {
+            List<int> pirateShip = Console.ReadLine().Split(">").Select(int.Parse).ToList();
+            List<int> warship = Console.ReadLine().Split(">").Select(int.Parse).ToList();
+            int maximumHealth = int.Parse(Console.ReadLine());
+
+            string command = Console.ReadLine();
+            while (command != "Retire")
+            {
+                string[] line = command.Split(" ");
+
+                if (line[0] == "Fire")
+                {
+                    if (OnFire(warship, line))
+                    {
+                        return;
+                    }
+                }
+                else if (line[0] == "Defend")
+                {
+                    if (OnDefend(warship, line, pirateShip))
+                    {
+                        return;
+                    }
+                }
+                else if (line[0] == "Repair")
+                {
+                    GetRepair(line, pirateShip, maximumHealth);
+                }
+                else if (line[0] == "Status")
+                {
+                    CheckStatus(pirateShip, maximumHealth);
+                }
+
+                command = Console.ReadLine();
+            }
+
+            Console.WriteLine($"Pirate ship status: {pirateShip.Sum()}");
+            Console.WriteLine($"Warship status: {warship.Sum()}");
+            return;
+
+        }
+
+        static void CheckStatus(List<int> pirateShip, int maximumHealth)
+        {
+            int needRepair = maximumHealth * 20 / 100;
+            int counter = 0;
+
+            for (int i = 0; i < pirateShip.Count; i++)
+            {
+                if (pirateShip[i] < needRepair)
+                {
+                    counter++;
+                }
+            }
+
+            Console.WriteLine($"{counter} sections need repair.");
+            return;
+        }
+
+        static void GetRepair(string[] line, List<int> pirateShip, int maximumHealth)
+        {
+            int index = int.Parse(line[1]);
+            int health = int.Parse(line[2]);
+
+            if (index >= 0 && index < pirateShip.Count)
+            {
+                if ((pirateShip[index] + health) <= maximumHealth)
+                {
+                    pirateShip[index] += health;
+                    return;
+                }
+            }
+
+            return;
+        }
+
+        static bool OnDefend(List<int> warship, string[] line, List<int> pirateShip)
+        {
+            int startIndex = int.Parse(line[1]);
+            int endIndex = int.Parse(line[2]);
+            int damage = int.Parse(line[3]);
+
+            if ((startIndex >= 0 && startIndex < pirateShip.Count) && (endIndex >= 0 && endIndex < pirateShip.Count))
+            {
+                for (int i = startIndex; i <= endIndex; i++)
+                {
+                    pirateShip[i] -= damage;
+
+                    if (pirateShip[i] <= 0)
+                    {
+                        Console.WriteLine("You lost! The pirate ship has sunken.");
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        static bool OnFire(List<int> warship, string[] line)
+        {
+            int index = int.Parse(line[1]);
+            int damage = int.Parse(line[2]);
+
+            if (index >= 0 && index < warship.Count)
+            {
+                warship[index] -= damage;
+
+                if (warship[index] <= 0)
+                {
+                    Console.WriteLine($"You won! The enemy ship has sunken.");
+                    return true;
+                }
+            }
+
+            return false;
+        }
