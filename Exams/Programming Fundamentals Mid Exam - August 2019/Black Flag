@@ -1,0 +1,32 @@
+        static void Main()
+        {
+            int daysOfPlunder = int.Parse(Console.ReadLine());
+            int dailyPlunding = int.Parse(Console.ReadLine());
+            double expectedPlunding = double.Parse(Console.ReadLine());
+
+            double totalPlunding = 0;
+
+            for (int i = 1; i <= daysOfPlunder; i++)
+            {
+                totalPlunding += dailyPlunding;
+
+                if (i % 3 == 0)
+                {
+                    totalPlunding += dailyPlunding * 0.5;
+                }
+
+                if (i % 5 == 0)
+                {
+                    totalPlunding -= totalPlunding * 0.3;
+                }
+            }
+
+            if (totalPlunding >= expectedPlunding)
+            {
+                Console.WriteLine($"Ahoy! {totalPlunding:f2} plunder gained.");
+            }
+            else
+            {
+                Console.WriteLine($"Collected only {totalPlunding / expectedPlunding * 100:f2}% of the plunder.");
+            }
+        }
