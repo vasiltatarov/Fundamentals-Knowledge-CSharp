@@ -1,0 +1,95 @@
+using System;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
+
+namespace ObjectAndClasses
+{
+    class Program
+    {
+        static void Main()
+        {
+            List<int> targets = Console.ReadLine().Split(" ").Select(int.Parse).ToList();
+
+            string command = Console.ReadLine();
+            while (command != "End")
+            {
+                string[] line = command.Split(" ");
+
+                if (line[0] == "Shoot")
+                {
+                    GetShoot(targets, line);
+                }
+                else if (line[0] == "Add")
+                {
+                    GetAdd(targets, line);
+                }
+                else if (line[0] == "Strike")
+                {
+                    GetStrike(targets, line);
+                }
+
+                command = Console.ReadLine();
+            }
+
+            Console.WriteLine(string.Join("|", targets));
+            return;
+        }
+
+        static void GetStrike(List<int> targets, string[] line)
+        {
+            int index = int.Parse(line[1]);
+            int radius = int.Parse(line[2]);
+
+            if ((index >= 0 && index < targets.Count) && (index - radius >= 0 && index + radius < targets.Count))
+            {
+                targets.RemoveRange(index - radius, index + radius);
+            }
+            else
+            {
+                Console.WriteLine("Strike missed!");
+            }
+
+            return;
+        }
+
+        static void GetAdd(List<int> targets, string[] line)
+        {
+            int index = int.Parse(line[1]);
+            int value = int.Parse(line[2]);
+
+            if (index >= 0 && index < targets.Count)
+            {
+                targets.Insert(index, value);
+            }
+            else
+            {
+                Console.WriteLine("Invalid placement!");
+            }
+
+            return;
+        }
+
+        static void GetShoot(List<int> targets, string[] line)
+        {
+            int index = int.Parse(line[1]);
+            int power = int.Parse(line[2]);
+
+            if (index >= 0 && index < targets.Count)
+            {
+                targets[index] -= power;
+
+                if (targets[index] <= 0)
+                {
+                    targets.RemoveAt(index);
+                }
+
+                return;
+            }
+
+            return;
+        }
+    }
+}
+
+
