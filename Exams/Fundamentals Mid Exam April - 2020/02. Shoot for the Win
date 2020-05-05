@@ -1,0 +1,48 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace FundExercise
+{
+    class Program
+    {
+        static void Main()
+        {
+            List<int> sequenceTargets = Console.ReadLine().Split(" ").Select(int.Parse).ToList();
+
+            int countShotTarget = 0;
+
+            string command = Console.ReadLine();
+            while (command != "End")
+            {
+                int shotTarget = int.Parse(command);
+
+                if (shotTarget >= 0 && shotTarget < sequenceTargets.Count)
+                {
+                    int currentValue = sequenceTargets[shotTarget];
+                    sequenceTargets[shotTarget] = -1;
+                    countShotTarget++;
+
+                    for (int i = 0; i < sequenceTargets.Count; i++)
+                    {
+                        if (sequenceTargets[i] != -1)
+                        {
+                            if (sequenceTargets[i] > currentValue)
+                            {
+                                sequenceTargets[i] -= currentValue;
+                            }
+                            else if (sequenceTargets[i] <= currentValue)
+                            {
+                                sequenceTargets[i] += currentValue;
+                            }
+                        }
+                    }
+                }
+
+                command = Console.ReadLine();
+            }
+            Console.Write($"Shot targets: {countShotTarget} -> ");
+            Console.Write(string.Join(" ", sequenceTargets));
+        }
+    }
+}
