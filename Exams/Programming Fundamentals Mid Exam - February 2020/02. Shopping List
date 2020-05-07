@@ -1,0 +1,90 @@
+        static void Main()
+        {
+            List<string> shoppingList = Console.ReadLine().Split("!").ToList();
+
+            string command = Console.ReadLine();
+            while (command!= "Go Shopping!")
+            {
+                string[] line = command.Split(" ");
+
+                if (line[0] == "Urgent")
+                {
+                    Urgent(shoppingList, line);
+                }
+                else if (line[0] == "Unnecessary")
+                {
+                    Unnecessary(shoppingList, line);
+                }
+                else if (line[0] == "Correct")
+                {
+                    Correct(shoppingList, line);
+                }
+                else if (line[0] == "Rearrange")
+                {
+                    Rearrange(shoppingList, line);
+                }
+
+                command = Console.ReadLine();
+            }
+
+            Console.WriteLine(string.Join(", ", shoppingList));
+        }
+
+        static void Rearrange(List<string> shoppingList, string[] line)
+        {
+            string item = line[1];
+
+            if (shoppingList.Contains(item))
+            {
+                shoppingList.Remove(item);
+
+                shoppingList.Add(item);
+            }
+
+            return;
+        }
+
+        static void Correct(List<string> shoppingList, string[] line)
+        {
+            string oldItem = line[1];
+            string newItem = line[2];
+
+            if (shoppingList.Contains(oldItem))
+            {
+                for (int i = 0; i < shoppingList.Count; i++)
+                {
+                    if (shoppingList[i] == oldItem)
+                    {
+                        shoppingList[i] = newItem;
+                    }
+                }
+            }
+
+            return;
+        }
+
+        static void Unnecessary(List<string> shoppingList, string[] line)
+        {
+            string item = line[1];
+
+            if (shoppingList.Contains(item))
+            {
+                shoppingList.Remove(item);
+            }
+
+            return;
+        }
+
+        static void Urgent(List<string> shoppingList, string[] line)
+        {
+            string item = line[1];
+
+            if (!shoppingList.Contains(item))
+            {
+                shoppingList.Insert(0, item);
+
+                return;
+            }
+
+            return;
+        }
