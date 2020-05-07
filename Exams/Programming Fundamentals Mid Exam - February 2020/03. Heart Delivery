@@ -1,0 +1,57 @@
+        static void Main()
+        {
+            List<int> neightborhood = Console.ReadLine().Split("@").Select(int.Parse).ToList();
+
+            int curentIndex = 0;
+
+            string command = Console.ReadLine();
+            while (command != "Love!")
+            {
+                string[] line = command.Split(" ");
+
+                int length = int.Parse(line[1]);
+                curentIndex += length;
+
+                if (curentIndex >= neightborhood.Count)
+                {
+                    curentIndex = 0;
+                }
+
+                if (neightborhood[curentIndex] != 0)
+                {
+                    neightborhood[curentIndex] -= 2;
+
+                    if (neightborhood[curentIndex] == 0)
+                    {
+                        Console.WriteLine($"Place {curentIndex} has Valentine's day.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Place {curentIndex} already had Valentine's day.");
+                }
+
+                command = Console.ReadLine();
+            }
+
+            int failedHouses = 0;
+
+            for (int i = 0; i < neightborhood.Count; i++)
+            {
+                if (neightborhood[i] != 0)
+                {
+                    failedHouses++;
+                }
+            }
+
+            Console.WriteLine($"Cupid's last position was {curentIndex}.");
+
+            if (failedHouses != 0)
+            {
+                Console.WriteLine($"Cupid has failed {failedHouses} places.");
+            }
+            else
+            {
+                Console.WriteLine($"Mission was successful.");
+            }
+        }
