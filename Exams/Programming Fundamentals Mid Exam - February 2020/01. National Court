@@ -1,0 +1,21 @@
+            int firstEmployeeCanHelpForHour = int.Parse(Console.ReadLine());
+            int secondEmployeecanHelpForHour = int.Parse(Console.ReadLine()); 
+            int thirdmployeecanHelpForHour = int.Parse(Console.ReadLine()); 
+            int totalPeople = int.Parse(Console.ReadLine());  
+
+            int countPeopleDone = firstEmployeeCanHelpForHour + secondEmployeecanHelpForHour + thirdmployeecanHelpForHour;
+
+            int totalTime = 0;
+
+            while (totalPeople > 0)
+            {
+                totalPeople -= countPeopleDone;
+                totalTime++;
+
+                if (totalTime % 4 == 0)
+                {
+                    totalTime++;
+                }
+            }
+
+            Console.WriteLine($"Time needed: {totalTime}h.");
