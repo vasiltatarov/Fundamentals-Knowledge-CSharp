@@ -1,0 +1,23 @@
+            int students = int.Parse(Console.ReadLine());
+            int lectures = int.Parse(Console.ReadLine());
+            int initialBonus = int.Parse(Console.ReadLine());
+
+            double totalBonus = 0;
+            double maxPoint = 0;
+            double attendance = 0;
+
+            for (int i = 1; i <= students; i++)
+            {
+                double attendancesOfEachStudent = double.Parse(Console.ReadLine());
+
+                totalBonus = (attendancesOfEachStudent / lectures) * (5 + initialBonus);
+
+                if (totalBonus > maxPoint)
+                {
+                    maxPoint = totalBonus;
+                    attendance = attendancesOfEachStudent;
+                }
+            }
+
+            Console.WriteLine($"Max Bonus: {Math.Ceiling(maxPoint)}.");
+            Console.WriteLine($"The student has attended {attendance} lectures.");
