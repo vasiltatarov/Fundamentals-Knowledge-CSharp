@@ -1,0 +1,64 @@
+        static void Main()
+        {
+            List<string> friends = Console.ReadLine().Split(", ").ToList();
+
+            int blacklistedNamesCount = 0;
+            int lostNamesCount = 0;
+
+            string command = Console.ReadLine();
+            while (command != "Report")
+            {
+                string[] line = command.Split(" ");
+
+                if (line[0] == "Blacklist")
+                {
+                    string name = line[1];
+
+                    if (friends.Contains(name))
+                    {
+                        int index = friends.IndexOf(name);
+                        friends[index] = "Blacklisted";
+                        blacklistedNamesCount++;
+
+                        Console.WriteLine($"{name} was blacklisted.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{name} was not found.");
+                    }
+                }
+                else if (line[0] == "Error")
+                {
+                    int index = int.Parse(line[1]);
+
+                    if (index >= 0 && index < friends.Count)
+                    {
+                        if (friends[index] != "Blacklisted" && friends[index] != "Lost")
+                        {
+                            Console.WriteLine($"{friends[index]} was lost due to an error.");
+
+                            friends[index] = "Lost";
+                            lostNamesCount++;
+                        }
+                    }
+                }
+                else if (line[0] == "Change")
+                {
+                    int index = int.Parse(line[1]);
+                    string newName = line[2];
+
+                    if (index >= 0 && index < friends.Count)
+                    {
+                        Console.WriteLine($"{friends[index]} changed his username to {newName}.");
+
+                        friends[index] = newName;
+                    }
+                }
+
+                command = Console.ReadLine();
+            }
+
+            Console.WriteLine($"Blacklisted names: {blacklistedNamesCount}");
+            Console.WriteLine($"Lost names: {lostNamesCount}");
+            Console.WriteLine(string.Join(" ", friends));
+        }
