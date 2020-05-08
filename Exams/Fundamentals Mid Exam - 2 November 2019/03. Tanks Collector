@@ -1,0 +1,100 @@
+        static void Main()
+        {
+            List<string> ownTanks = Console.ReadLine().Split(", ").ToList();
+
+            int countOfCommands = int.Parse(Console.ReadLine());
+
+            for (int i = 1; i <= countOfCommands; i++)
+            {
+                string[] line = Console.ReadLine().Split(", ");
+
+                if (line[0] == "Add")
+                {
+                    string tankName = line[1];
+
+                    if (ownTanks.Contains(tankName))
+                    {
+                        Console.WriteLine("Tank is already bought");
+
+                        continue;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Tank successfully bought");
+
+                        ownTanks.Add(tankName);
+
+                        continue;
+                    }
+                }
+                else if (line[0] == "Remove")
+                {
+                    string tankName = line[1];
+
+                    if (ownTanks.Contains(tankName))
+                    {
+                        Console.WriteLine("Tank successfully sold");
+
+                        ownTanks.Remove(tankName);
+
+                        continue;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Tank not found");
+
+                        continue;
+                    }
+                }
+                else if (line[0] == "Remove At")
+                {
+                    int index = int.Parse(line[1]);
+
+                    if (index >= 0 && index < ownTanks.Count)
+                    {
+                        ownTanks.RemoveAt(index);
+
+                        Console.WriteLine("Tank successfully sold");
+
+                        continue;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Index out of range");
+
+                        continue;
+                    }
+                }
+                else if (line[0] == "Insert")
+                {
+                    int index = int.Parse(line[1]);
+                    string tankName = line[2];
+
+                    if (index >= 0 && index < ownTanks.Count)
+                    {
+                        if (ownTanks.Contains(tankName))
+                        {
+                            Console.WriteLine("Tank is already bought");
+
+                            continue;
+                        }
+                        else
+                        {
+                            ownTanks.Insert(index, tankName);
+
+                            Console.WriteLine("Tank successfully bought");
+
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Index out of range");
+
+                        continue;
+                    }
+                }
+            }
+
+            Console.WriteLine(string.Join(", ", ownTanks));
+        }
