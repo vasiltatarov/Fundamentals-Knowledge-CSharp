@@ -1,0 +1,39 @@
+        static void Main()
+        {
+            double neededExperience = double.Parse(Console.ReadLine());
+            int countBattles = int.Parse(Console.ReadLine());
+
+            double totalExperience = 0;
+
+            for (int i = 1; i <= countBattles; i++)
+            {
+                double experienceEarnedPerBattles = double.Parse(Console.ReadLine());
+
+                totalExperience += experienceEarnedPerBattles;
+
+                if (i % 3 == 0)
+                {
+                    totalExperience += experienceEarnedPerBattles * 0.15;
+                }
+
+                if (i % 5 == 0)
+                {
+                    totalExperience -= experienceEarnedPerBattles * 0.10;
+                }
+
+                if (totalExperience >= neededExperience)
+                {
+                    countBattles = i;
+                    break;
+                }
+            }
+
+            if (totalExperience >= neededExperience)
+            {
+                Console.WriteLine($"Player successfully collected his needed experience for {countBattles} battles.");
+            }
+            else
+            {
+                Console.WriteLine($"Player was not able to collect the needed experience, {neededExperience - totalExperience:F2} more needed.");
+            }
+        }
