@@ -1,0 +1,32 @@
+            int biscuitsMadePerDayFromOneWorker = int.Parse(Console.ReadLine());
+            int countWorkers = int.Parse(Console.ReadLine());
+            int biscuitsFromCompeting = int.Parse(Console.ReadLine());
+
+            double biscuitsForDay = biscuitsMadePerDayFromOneWorker * countWorkers;
+            double totalBiscuits = 0;
+
+            for (int i = 1; i <= 30; i++)
+            {
+                if (i % 3 == 0)
+                {
+                    totalBiscuits += Math.Floor(biscuitsForDay * 0.75);
+                }
+                else
+                {
+                    totalBiscuits += biscuitsForDay;
+                }
+            }
+
+            Console.WriteLine($"You have produced {totalBiscuits} biscuits for the past month.");
+
+            double diff = Math.Abs(totalBiscuits - biscuitsFromCompeting);
+            double percentage = diff / biscuitsFromCompeting * 100;
+
+            if (totalBiscuits > biscuitsFromCompeting)
+            {
+                Console.WriteLine($"You produce {percentage:F2} percent more biscuits.");
+            }
+            else
+            {
+                Console.WriteLine($"You produce {percentage:F2} percent less biscuits.");
+            }
