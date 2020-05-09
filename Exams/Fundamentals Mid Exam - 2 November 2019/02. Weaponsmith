@@ -1,0 +1,80 @@
+        static void Main()
+        {
+            List<string> partsOfWeapon = Console.ReadLine().Split("|").ToList();
+
+            List<string> evenParts = new List<string>();
+            List<string> oddParts = new List<string>();
+
+            string command = Console.ReadLine();
+            while (command != "Done")
+            {
+                string[] line = command.Split(" ");
+
+                if (line[0] == "Move")
+                {
+                    int index = int.Parse(line[2]);
+
+                    if (line[1] == "Left")
+                    {
+                        if (index >= 0 && index < partsOfWeapon.Count)
+                        {
+                            if (index - 1 >= 0 && index - 1 < partsOfWeapon.Count)//1
+                            {
+                                string currentElement = partsOfWeapon[index]; // ri|As|er|hb|ng
+
+                                partsOfWeapon[index] = partsOfWeapon[index - 1];
+
+                                partsOfWeapon[index - 1] = currentElement;
+                            }
+                        }
+                    }
+                    else if (line[1] == "Right")
+                    {
+                        if (index >= 0 && index < partsOfWeapon.Count)
+                        {
+                            if (index + 1 >= 0 && index + 1 < partsOfWeapon.Count)
+                            {
+                                string currentElement = partsOfWeapon[index];
+
+                                partsOfWeapon[index] = partsOfWeapon[index + 1];
+
+                                partsOfWeapon[index + 1] = currentElement;
+                            }
+                        }
+                    }
+                }
+                else if (line[0] == "Check")
+                {
+                    if (line[1] == "Even")
+                    {
+                        for (int i = 0; i < partsOfWeapon.Count; i++)
+                        {
+                            if (i % 2 == 0)
+                            {
+                                evenParts.Add(partsOfWeapon[i]);
+                            }
+                        }
+
+                        Console.WriteLine(string.Join(" ", evenParts));
+                    }
+                    else if (line[1] == "Odd")
+                    {
+                        for (int i = 0; i < partsOfWeapon.Count; i++)
+                        {
+                            if (i % 2 == 1)
+                            {
+                                oddParts.Add(partsOfWeapon[i]);
+                            }
+                        }
+
+                        Console.WriteLine(string.Join(" ", oddParts));
+                    }
+                }
+
+                command = Console.ReadLine();
+            }
+
+            string weaponName = string.Join("", partsOfWeapon);
+
+            Console.WriteLine($"You crafted {weaponName}!");
+        }
