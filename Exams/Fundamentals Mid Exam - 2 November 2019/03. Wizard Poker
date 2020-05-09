@@ -1,0 +1,75 @@
+        static void Main()
+        {
+            List<string> cards = Console.ReadLine().Split(":").ToList();
+
+            List<string> newDeck = new List<string>();
+
+            string command = Console.ReadLine();
+            while (command != "Ready")
+            {
+                string[] line = command.Split(" ");
+
+                if (line[0] == "Add")
+                {
+                    string cardName = line[1];
+
+                    if (cards.Contains(cardName))
+                    {
+                        newDeck.Add(cardName);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Card not found.");
+                    }
+                }
+                else if (line[0] == "Insert")
+                {
+                    string cardName = line[1];
+                    int index = int.Parse(line[2]);
+
+                    if (index >= 0 && index < cards.Count && cards.Contains(cardName))
+                    {
+                        newDeck.Insert(index, cardName);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error!");
+                    }
+                }
+                else if (line[0] == "Remove")
+                {
+                    string cardName = line[1];
+
+                    if (newDeck.Contains(cardName))
+                    {
+                        newDeck.Remove(cardName);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Card not found.");
+                    }
+                }
+                else if (line[0] == "Swap")
+                {
+                    string cardName1 = line[1];
+                    string cardName2 = line[2];
+
+                    if (newDeck.Contains(cardName1) && newDeck.Contains(cardName2))
+                    {
+                        int indexOfCard1 = newDeck.IndexOf(cardName1);
+                        int indexOfCard2 = newDeck.IndexOf(cardName2);
+
+                        newDeck[indexOfCard1] = cardName2;
+                        newDeck[indexOfCard2] = cardName1;
+                    }
+                }
+                else if (line[0] == "Shuffle" && line[1] == "deck")
+                {
+                    newDeck.Reverse();
+                }
+
+                command = Console.ReadLine();
+            }
+
+            Console.WriteLine(string.Join(" ", newDeck));
+        }
