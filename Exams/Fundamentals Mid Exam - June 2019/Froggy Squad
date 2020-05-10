@@ -1,0 +1,107 @@
+            List<string> frogs = Console.ReadLine().Split(" ").ToList();
+
+            while (true)
+            {
+                string[] command = Console.ReadLine().Split(" ");
+
+                if (command[0] == "Join")
+                {
+                    string name = command[1];
+
+                    if (!(frogs.Contains(name)))
+                    {
+                        frogs.Add(name);
+                    }
+                }
+                else if (command[0] == "Jump")
+                {
+                    string name = command[1];
+                    int index = int.Parse(command[2]);
+
+                    if (index >= 0 && index < frogs.Count)
+                    {
+                        frogs.Insert(index, name);
+                    }
+                }
+                else if (command[0] == "Dive")
+                {
+                    int index = int.Parse(command[1]);
+
+                    if (index >= 0 && index < frogs.Count)
+                    {
+                        frogs.RemoveAt(index);
+                    }
+                }
+                else if (command[0] == "First" || command[0] == "Last")
+                {
+                    if (command[0] == "First")
+                    {
+                        int count = int.Parse(command[1]);
+
+                        for (int i = 0; i < count; i++)
+                        {
+                            if (count >= frogs.Count)
+                            {
+                                for (int j = 0; j < frogs.Count; j++)
+                                {
+                                    Console.Write(frogs[j] + " ");
+                                }
+
+                                break;
+                            }
+                            else
+                            {
+                                Console.Write(frogs[i] + " ");
+                            }
+                        }
+
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        int count = int.Parse(command[1]);
+
+                        if (count >= frogs.Count)
+                        {
+                            for (int j = 0; j < frogs.Count; j++)
+                            {
+                                Console.Write(frogs[j] + " ");
+                            }
+
+                            Console.WriteLine();
+
+                            continue;
+                        }
+                        else
+                        {
+                            for (int i = frogs.Count - count; i < frogs.Count; i++)
+                            {
+                                Console.Write(frogs[i] + " ");
+                            }
+                        }
+                        
+                        Console.WriteLine();
+                    }
+                }
+                else if (command[0] == "Print")
+                {
+                    if (command[1] == "Normal")
+                    {
+                        string print = string.Join(" ", frogs);
+
+                        Console.WriteLine($"Frogs: {print}");
+
+                        return;
+                    }
+                    else if (command[1] == "Reversed")
+                    {
+                        frogs.Reverse();
+
+                        string print = string.Join(" ", frogs);
+
+                        Console.WriteLine($"Frogs: {print}");
+
+                        return;
+                    }
+                }
+            }
