@@ -1,0 +1,23 @@
+            int madeSteps = int.Parse(Console.ReadLine());
+            double lengthOfOneStep = double .Parse(Console.ReadLine());
+            int distanceYouNeedToTravel = int.Parse(Console.ReadLine());
+
+            double totalSteps = 0;
+
+            for (int i = 1; i <= madeSteps; i++)
+            {
+                if (i % 5 == 0)
+                {
+                    totalSteps += lengthOfOneStep * 0.70;
+                }
+                else
+                {
+                    totalSteps += lengthOfOneStep;
+                }
+            }
+
+            totalSteps /= 100;
+
+            double percentage = totalSteps / distanceYouNeedToTravel * 100;
+
+            Console.WriteLine($"You travelled {percentage:F2}% of the distance!");
