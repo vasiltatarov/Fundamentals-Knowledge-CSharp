@@ -1,0 +1,79 @@
+            List<int> numbers = Console.ReadLine().Split(" ").Select(int.Parse).ToList();
+
+            string command = Console.ReadLine();
+            while (command != "End")
+            {
+                string[] line = command.Split(" ");
+
+                if (line[0] == "Switch")
+                {
+                    int index = int.Parse(line[1]);
+
+                    if (index >= 0 && index < numbers.Count)
+                    {
+                        if (numbers[index] > 0)
+                        {
+                            numbers[index] = -numbers[index];
+                        }
+                        else 
+                        {
+                            numbers[index] = Math.Abs(numbers[index]);
+                        }
+                    }
+                }
+                else if (line[0] == "Change")
+                {
+                    int index = int.Parse(line[1]);
+                    int value = int.Parse(line[2]);
+
+                    if (index >= 0 && index < numbers.Count)
+                    {
+                        numbers[index] = value;
+                    }
+                }
+                else if (line[0] == "Sum")
+                {
+                    if (line[1] == "Negative")
+                    {
+                        int negatives = 0;
+
+                        for (int i = 0; i < numbers.Count; i++)
+                        {
+                            if (numbers[i] < 0)
+                            {
+                                negatives += numbers[i];
+                            }
+                        }
+
+                        Console.WriteLine(negatives);
+                    }
+                    else if (line[1] == "Positive")
+                    {
+                        int positives = 0;
+
+                        for (int i = 0; i < numbers.Count; i++)
+                        {
+                            if (numbers[i] > 0)
+                            {
+                                positives += numbers[i];
+                            }
+                        }
+
+                        Console.WriteLine(positives);
+                    }
+                    else if (line[1] == "All")
+                    {
+                        Console.WriteLine(numbers.Sum());
+                    }
+                }
+
+                command = Console.ReadLine();
+            }
+
+            for (int i = 0; i < numbers.Count; i++)
+            {
+                if (numbers[i] >= 0)
+                {
+                    Console.Write(numbers[i] + " ");
+                }
+            }
