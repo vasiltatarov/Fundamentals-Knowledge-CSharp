@@ -1,0 +1,51 @@
+            int days = int.Parse(Console.ReadLine());
+            double budget = double.Parse(Console.ReadLine());
+            int people = int.Parse(Console.ReadLine());
+            double priceForFuelPerKilometer = double.Parse(Console.ReadLine());
+            double foodExpensesPerPersonPerDay = double.Parse(Console.ReadLine());
+            double roomPricePerOneNightPerOnePerson = double.Parse(Console.ReadLine());
+
+
+            double hotelPrice = roomPricePerOneNightPerOnePerson * people * days;
+            double foodExpenses = foodExpensesPerPersonPerDay * people * days;
+
+            if (people > 10)
+            {
+                hotelPrice *= 0.75;
+            }
+
+            double currentExpenses = hotelPrice + foodExpenses;
+
+            for (int i = 1; i <= days; i++)
+            {
+                double travelledDistanceInKilometersPerDay = double.Parse(Console.ReadLine());
+
+                if (currentExpenses > budget)
+                {
+                    break;
+                }
+
+                double travelExpensesPerDay = travelledDistanceInKilometersPerDay * priceForFuelPerKilometer;
+                currentExpenses += travelExpensesPerDay;
+
+                if (i % 3 == 0 || i % 5 == 0)
+                {
+                    currentExpenses += currentExpenses * 0.40;
+                }
+
+                if (i % 7 == 0)
+                {
+                    currentExpenses -= currentExpenses / people;
+                }
+            }
+
+            double diff = Math.Abs(budget - currentExpenses);
+
+            if (budget >= currentExpenses)
+            {
+                Console.WriteLine($"You have reached the destination. You have {diff:F2}$ budget left.");
+            }
+            else
+            {
+                Console.WriteLine($"Not enough money to continue the trip. You need {diff:F2}$ more.");
+            }
