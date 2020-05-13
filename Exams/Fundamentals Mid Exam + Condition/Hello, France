@@ -1,0 +1,69 @@
+        static void Main()
+        {
+            List<string> items = Console.ReadLine().Split("|").ToList();
+            double budget = double.Parse(Console.ReadLine());
+            double initialBudget = budget;
+
+            List<double> boughtItems = new List<double>();
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                string[] currentItemAndPrice = items[i].Split("->");
+
+                string type = currentItemAndPrice[0];
+                double price = double.Parse(currentItemAndPrice[1]);
+
+                if (type == "Clothes" && price <= 50.00)
+                {
+                    if (budget >= price)
+                    {
+                        budget -= price;
+                        price *= 1.40;
+                        boughtItems.Add(price);
+                    }
+                }
+                else if (type == "Shoes" && price <= 35.00)
+                {
+                    if (budget >= price)
+                    {
+                        budget -= price;
+                        price *= 1.40;
+                        boughtItems.Add(price);
+                    }
+                }
+                else if (type == "Accessories" && price <= 20.50)
+                {
+                    if (budget >= price)
+                    {
+                        budget -= price;
+                        price *= 1.40;
+                        boughtItems.Add(price);
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+            for (int i = 0; i < boughtItems.Count; i++)
+            {
+                Console.Write($"{boughtItems[i]:F2}" + " ");
+            }
+            Console.WriteLine();
+
+            double budgetAfterSeling = budget + boughtItems.Sum();
+
+            double profit = budgetAfterSeling - initialBudget;
+
+            Console.WriteLine($"Profit: {profit:f2}");
+
+            if (budgetAfterSeling >= 150)
+            {
+                Console.WriteLine("Hello, France!");
+            }
+            else
+            {
+                Console.WriteLine("Time to go.");
+            }
+        }
