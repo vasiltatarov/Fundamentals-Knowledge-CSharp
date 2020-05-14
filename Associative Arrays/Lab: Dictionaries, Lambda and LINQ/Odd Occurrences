@@ -1,0 +1,32 @@
+Write a program that extracts all elements from a given sequence of words that are present in it an odd number of times (case-insensitive).
+⦁	Words are given on a single line, space separated.
+⦁	Print the result elements in lowercase, in their order of appearance.
+
+        static void Main()
+        {
+            var words = Console.ReadLine().Split(" ").ToArray();
+
+            var dict = new Dictionary<string, int>();
+
+            foreach (var word in words)
+            {
+                string wordToLower = word.ToLower();
+
+                if (dict.ContainsKey(wordToLower))
+                {
+                    dict[wordToLower]++;
+                }
+                else
+                {
+                    dict.Add(wordToLower, 1);
+                }
+            }
+
+            foreach (var word in dict)
+            {
+                if (word.Value % 2 == 1)
+                {
+                    Console.Write(word.Key + " ");
+                }
+            }
+        }
