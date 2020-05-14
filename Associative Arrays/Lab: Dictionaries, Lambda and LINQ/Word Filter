@@ -1,0 +1,7 @@
+Read an array of strings and take only words, whose length is even. Print each word on a new line.
+
+            var words = Console.ReadLine().Split(" ").ToList();
+
+            var evenWords = words.Where(x => x.Length % 2 == 0).ToList();
+
+            Console.WriteLine(string.Join("\n", evenWords));
