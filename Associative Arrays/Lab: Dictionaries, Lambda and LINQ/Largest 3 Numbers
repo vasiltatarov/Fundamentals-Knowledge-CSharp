@@ -1,0 +1,7 @@
+Read a list of integers and print the largest 3 of them. If there are less than 3, print all of them.
+
+            var numbers = Console.ReadLine().Split(" ").Select(int.Parse).ToList();
+
+            var largestNum = numbers.OrderByDescending(x => x).Take(3);
+
+            Console.WriteLine(string.Join(" ", largestNum));
