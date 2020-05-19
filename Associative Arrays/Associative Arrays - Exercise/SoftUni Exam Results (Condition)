@@ -10,7 +10,7 @@ in the following format:
 Submissions:
 {language} – {submissionsCount}
 Input / Constraints
-Until you receive "exam finished" you will be receiving participant submissions in the following format: "{username}-{language}-{points}".
+Until you receive "exam finished" you will be receiving participant submissions in following format: "{username}-{language}-{points}".
 You can receive a ban command -> "{username}-banned"
 The points of the participant will always be a valid integer in the range [0-100]; 
 Output
