@@ -19,13 +19,12 @@ For each type, print average stats of its dragons in format {Type}::({damage}/{h
 Damage, health and armor should be rounded to two digits after the decimal separator
 For each dragon, print its stats in format -{Name} -> damage: {damage}, health: {health}, armor: {armor}
 
-6
+5
 Red Bazgargal 100 2500 25
 Black Dargonax 200 3500 18
 Red Obsidion 220 2200 35
 Blue Kerizsa 60 2100 20
 Blue Algordox 65 1800 50
-Blue Algordox 99 1800 50
 
 Red::(160.00/2350.00/30.00)
 -Bazgargal -> damage: 100, health: 2500, armor: 25
