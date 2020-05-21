@@ -1,0 +1,81 @@
+            //60/100
+            var contests = new Dictionary<string, string>();
+            var userContests = new SortedDictionary<string, Dictionary<string, int>>();
+            var totalPoints = new Dictionary<string, int>();
+
+            string command = Console.ReadLine();
+            while (command != "end of contests")
+            {
+                string[] line = command.Split(":");
+                string contest = line[0];
+                string password = line[1];
+
+                contests.Add(contest, password);
+
+                command = Console.ReadLine();
+            }
+
+            command = Console.ReadLine();
+            while (command != "end of submissions")
+            {
+                string[] line = command.Split("=>");
+                string contest = line[0];
+                string password = line[1];
+                string username = line[2];
+                int points = int.Parse(line[3]);
+
+                if (contests.ContainsKey(contest) && contests[contest].Contains(password))
+                {
+                    if (userContests.ContainsKey(username))
+                    {
+                        if (!userContests[username].ContainsKey(contest))
+                        {
+                            userContests[username].Add(contest, points);
+
+                            totalPoints[username] += points;
+                        }
+                        else if (userContests[username].ContainsKey(contest))
+                        {
+                            if (userContests[username][contest] < points)
+                            {
+                                userContests[username][contest] = points;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        userContests.Add(username, new Dictionary<string, int>());
+                        userContests[username].Add(contest, points);
+
+                        totalPoints.Add(username, points);
+                    }
+                }
+
+                command = Console.ReadLine();
+            }
+
+            string usernameWithTotalPoints = "";
+            int total = 0;
+
+            foreach (var item in totalPoints)
+            {
+                if (item.Value > total)
+                {
+                    usernameWithTotalPoints = item.Key;
+                    total = item.Value;
+                }
+            }
+
+            Console.WriteLine($"Best candidate is {usernameWithTotalPoints} with total {total} points.");
+
+            Console.WriteLine("Ranking: ");
+
+            foreach (var item in userContests)
+            {
+                Console.WriteLine(item.Key);
+
+                foreach (var user in item.Value.OrderByDescending(x => x.Value))
+                {
+                    Console.WriteLine($"#  {user.Key} -> {user.Value}");
+                }
+            }
