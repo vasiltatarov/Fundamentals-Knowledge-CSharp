@@ -1,0 +1,95 @@
+        static void Main()
+        {
+            var dragons = new Dictionary<string, List<Dragon>>();
+
+            int numberOfDragons = int.Parse(Console.ReadLine());
+            for (int i = 1; i <= numberOfDragons; i++)
+            {
+                string[] dragon = Console.ReadLine().Split(" ");
+
+                if (dragon[2] == "null")
+                {
+                    dragon[2] = "45";
+                }
+                if (dragon[3] == "null")
+                {
+                    dragon[3] = "250";
+                }
+                if (dragon[4] == "null")
+                {
+                    dragon[4] = "10";
+                }
+
+                string type = dragon[0];
+                string name = dragon[1];
+                int damage = int.Parse(dragon[2]);
+                int health = int.Parse(dragon[3]);
+                int armor = int.Parse(dragon[4]);
+
+                Dragon newDragon = new Dragon(name, damage, health, armor);
+
+                if (dragons.ContainsKey(type))
+                {
+                    bool isExist = true;
+
+                    foreach (var item in dragons[type])
+                    {
+                        if (item.Name == name)
+                        {
+                            isExist = false;
+                        }
+                    }
+
+                    if (isExist)
+                    {
+                        dragons[type].Add(newDragon);
+                    }
+                }
+                else
+                {
+                    dragons.Add(type, new List<Dragon>());
+                    dragons[type].Add(newDragon);
+                }
+            }
+
+            foreach (var type in dragons)
+            {
+                double damageAvg = 0;
+                double healthAvg = 0;
+                double armorAvg = 0;
+
+                foreach (Dragon avg in type.Value)
+                {
+                    damageAvg += avg.Damage;
+                    healthAvg += avg.Health;
+                    armorAvg += avg.Armor;
+                }
+
+                var damageAv = damageAvg / dragons[type.Key].Count();
+                var healthAv = healthAvg / dragons[type.Key].Count();
+                var armorAv = armorAvg / dragons[type.Key].Count();
+
+                Console.WriteLine($"{type.Key}::({damageAv:F2}/{healthAv:F2}/{armorAv:F2})");
+
+                foreach (Dragon dragon in type.Value.OrderBy(x => x.Name))
+                {
+                    Console.WriteLine($"-{dragon.Name} -> damage: {dragon.Damage}, health: {dragon.Health}, armor: {dragon.Armor}");
+                }
+            }
+        }
+
+        public class Dragon
+        {
+            public string Name { get; set; }
+            public int Damage { get; set; }
+            public int Health { get; set; }
+            public int Armor { get; set; }
+
+            public Dragon(string name, int damage, int health, int armor)
+            {
+                Name = name;
+                Damage = damage;
+                Health = health;
+                Armor = armor;
+            }
+        }
