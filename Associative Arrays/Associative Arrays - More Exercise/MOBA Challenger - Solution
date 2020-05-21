@@ -1,0 +1,75 @@
+            var playersAndTotalSkill = new SortedDictionary<string, int>();
+            var playersPositions = new Dictionary<string, SortedDictionary<string, int>>();
+
+            string command = Console.ReadLine();
+            while (command != "Season end")
+            {
+                string[] line = command.Split(" ");
+
+                if (line[1] == "->")
+                {
+                    string[] lines = command.Split(" -> ");
+                    string player = lines[0];
+                    string position = lines[1];
+                    int skill = int.Parse(lines[2]);
+
+                    if (playersAndTotalSkill.ContainsKey(player))
+                    {
+                        if (!playersPositions[player].ContainsKey(position))
+                        {
+                            playersPositions[player].Add(position, skill);
+
+                            playersAndTotalSkill[player] += skill;
+                        }
+                        //else // if current skill is lower update
+                        //{
+
+                        //}
+                    }
+                    else
+                    {
+                        playersAndTotalSkill.Add(player, skill);
+
+                        playersPositions.Add(player, new SortedDictionary<string, int>());
+                        playersPositions[player].Add(position, skill);
+                    }
+                }
+                else if (line[1] == "vs")
+                {
+                    string[] lines = command.Split(" vs ");
+                    string player1 = lines[0];
+                    string player2 = lines[1];
+
+                    if (playersAndTotalSkill.ContainsKey(player1) && playersAndTotalSkill.ContainsKey(player2))
+                    {
+                        foreach (var item in playersPositions[player1])
+                        {
+                            if (playersPositions[player2].ContainsKey(item.Key))
+                            {
+                                //int currentskill = playersPositions[player1][item.Key];
+
+                                if (playersPositions[player1][item.Key] > playersPositions[player2][item.Key])
+                                {
+                                    playersAndTotalSkill.Remove(player2);
+                                }
+                                else
+                                {
+                                    playersAndTotalSkill.Remove(player1);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                command = Console.ReadLine();
+            }
+
+            foreach (var player in playersAndTotalSkill.OrderByDescending(x => x.Value))
+            {
+                Console.WriteLine($"{player.Key}: {player.Value} skill");
+
+                foreach (var position in playersPositions[player.Key].OrderByDescending(x => x.Value))
+                {
+                    Console.WriteLine($"- {position.Key} <::> {position.Value}");
+                }
+            }
