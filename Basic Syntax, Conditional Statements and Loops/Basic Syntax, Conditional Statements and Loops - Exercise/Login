@@ -1,0 +1,39 @@
+You will be given a string representing a username. The password will be that username reversed. Until you receive the correct password
+print on the console "Incorrect password. Try again. ". When you receive the correct password print "User {username} logged in."
+However on the fourth try if the password is still not correct print "User {username} blocked! " and end the program.
+Input:
+Acer
+login
+recA
+Output:
+Incorrect password. Try again.
+User Acer logged in.
+
+            string username = Console.ReadLine();
+
+            string password = "";
+
+            for (int i = username.Length - 1; i >= 0; i--)
+            {
+                password += username[i];
+            }
+
+            int counter = 1;
+
+            string user = Console.ReadLine();
+            while (user != password)
+            {
+                if (counter == 4)
+                {
+                    Console.WriteLine($"User {username} blocked! ");
+                    return;
+                }
+
+                Console.WriteLine("Incorrect password. Try again.");
+
+                counter++;
+
+                user = Console.ReadLine();
+            }
+
+            Console.WriteLine($"User {username} logged in.");
