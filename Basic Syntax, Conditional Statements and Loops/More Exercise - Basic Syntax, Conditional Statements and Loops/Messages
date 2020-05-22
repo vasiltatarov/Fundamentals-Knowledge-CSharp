@@ -1,0 +1,45 @@
+Write a program, which emulates typing an SMS, following this guide:
+Let’s take the number 222 (c) for example. Our algorithm would look like this:
+Find the number of digits the number has "e.g. 222  3 digits"
+Find the main digit of the number "e.g.  222  2"
+Find the offset of the number. To do that, you can use the formula: (main digit - 2) * 3
+If the main digit is 8 or 9, we need to add 1 to the offset, since the digits 7 and 9 have 4 letters each
+Finally, find the letter index (a  0, c  2, etc.). To do that, we can use the following formula: (offset + digit length - 1).
+After we’ve found the letter index, we can just add that to the ASCII code of the lowercase letter "a" (97)
+
+            int clicks = int.Parse(Console.ReadLine());
+            string letter = "";
+
+            for (int i = 1; i <= clicks; i++)
+            {
+                string message = Console.ReadLine();
+                int digitLength = message.Length;
+                //int mainDigit = message[0] - '0';
+                int mainDigit = int.Parse(message) % 10;
+                int offset = (mainDigit - 2) * 3;
+
+                if (mainDigit == 0)
+                {
+                    letter += (char)(mainDigit + 32);
+                    continue;
+                }
+
+                if (mainDigit == 8 || mainDigit == 9)
+                {
+                    offset++;
+                }
+
+                int letterIndex = offset + digitLength - 1;
+                letter += (char)(letterIndex + 97);
+            }
+
+            Console.WriteLine(letter);
+ Input:           
+5
+44
+33
+555
+555
+666
+ Output:
+hello
