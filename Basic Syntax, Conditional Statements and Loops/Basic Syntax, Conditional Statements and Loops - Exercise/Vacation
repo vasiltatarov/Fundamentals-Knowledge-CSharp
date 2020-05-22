@@ -1,0 +1,78 @@
+You are given a group of people, type of the group, on which day of the week they are going to stay. Based on that information calculate
+how much they have to pay and print that price on the console. Use the table below. In each cell is the price for a single person.
+The output should look like that: "Total price: {price}". The price should be formatted to the second decimal point.
+Students – if the group is bigger than or equal to 30 people you should reduce the total price by 15%
+Business – if the group is bigger than or equal to  100 people 10 of them can stay for free.
+Regular – if the group is bigger than or equal to 10 and less than or equal to 20 reduce the total price by 5%
+
+            int groupOfPeople = int.Parse(Console.ReadLine());
+            var typeOfGroup = Console.ReadLine();
+            var whichDayOfWeek = Console.ReadLine();
+
+            double pricePerPerson = 0;
+            double total = 0;
+
+            if (typeOfGroup == "Students")
+            {
+                if (whichDayOfWeek == "Friday")
+                {
+                    pricePerPerson = 8.45;
+                }
+                else if (whichDayOfWeek == "Saturday")
+                {
+                    pricePerPerson = 9.80;
+                }
+                else if (whichDayOfWeek == "Sunday")
+                {
+                    pricePerPerson = 10.46;
+                }
+
+                if (groupOfPeople >= 30)
+                {
+                    pricePerPerson *= 0.85;
+                }
+            }
+            else if (typeOfGroup == "Business")
+            {
+                if (whichDayOfWeek == "Friday")
+                {
+                    pricePerPerson = 10.90;
+                }
+                else if (whichDayOfWeek == "Saturday")
+                {
+                    pricePerPerson = 15.60;
+                }
+                else if (whichDayOfWeek == "Sunday")
+                {
+                    pricePerPerson = 16;
+                }
+
+                if (groupOfPeople >= 100)
+                {
+                    groupOfPeople -= 10;
+                }
+            }
+            else if (typeOfGroup == "Regular")
+            {
+                if (whichDayOfWeek == "Friday")
+                {
+                    pricePerPerson = 15;
+                }
+                else if (whichDayOfWeek == "Saturday")
+                {
+                    pricePerPerson = 20;
+                }
+                else if (whichDayOfWeek == "Sunday")
+                {
+                    pricePerPerson = 22.50;
+                }
+
+                if (groupOfPeople >= 10 && groupOfPeople <= 20)
+                {
+                    pricePerPerson *= 0.95;
+                }
+            }
+
+            total = pricePerPerson * groupOfPeople;
+
+            Console.WriteLine($"Total price: {total:F2}");
