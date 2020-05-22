@@ -1,0 +1,31 @@
+Write a program to check if a given number is a strong number or not.
+A number is strong if the sum of the Factorial of each digit is equal to the number. For example 145 is a strong number,
+because 1! + 4! + 5! = 145. Print "yes" if the number is strong and "no" if the number is not strong
+
+            int number = int.Parse(Console.ReadLine());
+            int strongNum = number;
+            int facturialOfAllNumber = 0;
+
+            while (number > 0)
+            {
+                int lastDigit = number % 10;
+                int lastDigitFacturialSumm = 1;
+
+                for (int i = 2; i <= lastDigit; i++)
+                {
+                    lastDigitFacturialSumm *= i;
+                }
+
+                facturialOfAllNumber += lastDigitFacturialSumm;
+
+                number /= 10;
+            }
+
+            if (facturialOfAllNumber == strongNum)
+            {
+                Console.WriteLine("yes");
+            }
+            else
+            {
+                Console.WriteLine("no");
+            }
