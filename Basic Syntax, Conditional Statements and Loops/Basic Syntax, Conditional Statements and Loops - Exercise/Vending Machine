@@ -1,0 +1,80 @@
+You task is to calculate the total price of a purchase from a vending machine. Until you receive "Start" you will be given different 
+coins that are being inserted in the machine. You have to sum them in order to have the total money inserted. There is a problem though.
+Your vending machine only works with 0.1, 0.2, 0.5, 1, and 2 coins. If someone tries to insert some other coins you have to display
+"Cannot accept {money}" and not add it to the total money. On the next few lines until you receive "End" you will be given products to
+purchase. Your machine has however only "Nuts", "Water", "Crisps", "Soda", "Coke".The prices are: 2.0, 0.7, 1.5, 0.8, 1.0 respectively.
+If the person tries to purchase a not existing product print "Invalid product". Be careful that the person may try to purchase
+a product they don’t have the money for. In that case print "Sorry, not enough money". If the person purchases a product successfully
+print "Purchased {product name}". After the "End" command print the money that are left formatted to the second decimal point in the
+format "Change: {money left}".
+
+            double totalCoins = 0;
+
+            string command = Console.ReadLine();
+            while (command != "Start")
+            {
+                double coins = double.Parse(command);
+
+                if (coins == 0.1 || coins == 0.2 || coins == 0.5 || coins == 1 || coins == 2)
+                {
+                    totalCoins += coins;
+                }
+                else
+                {
+                    Console.WriteLine($"Cannot accept {coins}");
+                }
+
+                command = Console.ReadLine();
+            }
+
+            string secondCommand = Console.ReadLine();
+            while (secondCommand != "End")
+            {
+                string products = secondCommand;
+                bool isValid = false;
+                double pricePerProduct = 0;
+
+                if (products == "Nuts")
+                {
+                    pricePerProduct = 2.0;
+                    isValid = true;
+                }
+                else if (products == "Water")
+                {
+                    pricePerProduct = 0.7;
+                    isValid = true;
+                }
+                else if (products == "Crisps")
+                {
+                    pricePerProduct = 1.5;
+                    isValid = true;
+                }
+                else if (products == "Soda")
+                {
+                    pricePerProduct = 0.8;
+                    isValid = true;
+                }
+                else if (products == "Coke")
+                {
+                    pricePerProduct = 1.0;
+                    isValid = true;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid product");
+                }
+
+                if (totalCoins >= pricePerProduct && isValid)
+                {
+                    totalCoins -= pricePerProduct;
+                    Console.WriteLine($"Purchased {products.ToLower()}");
+                }
+                else if (isValid)
+                {
+                    Console.WriteLine("Sorry, not enough money");
+                }
+
+                secondCommand = Console.ReadLine();
+            }
+
+            Console.WriteLine($"Change: {totalCoins:F2}");
