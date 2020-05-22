@@ -1,0 +1,11 @@
+Read three real numbers and sort them in descending order. Print each number on a new line.
+
+            double[] numbers = new double[3];
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                numbers[i] = double.Parse(Console.ReadLine());
+            }
+            var sortNumbers = numbers.OrderByDescending(x => x);
+
+            Console.WriteLine(string.Join("\n", sortNumbers));
