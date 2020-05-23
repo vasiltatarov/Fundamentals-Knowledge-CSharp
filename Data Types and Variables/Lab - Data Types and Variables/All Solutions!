@@ -1,0 +1,51 @@
+03. Exact Sum of Real Numbers
+Write program to enter n numbers and calculate and print their exact sum (without rounding).
+
+            int n = int.Parse(Console.ReadLine());
+            decimal sum = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                var number = decimal.Parse(Console.ReadLine());
+                sum += (decimal)number;
+            }
+
+            Console.WriteLine(sum);
+            
+04. Centuries to Minutes
+Write program to enter an integer number of centuries and convert it to years, days, hours and minutes.
+
+            int n = int.Parse(Console.ReadLine());
+
+            decimal years = n * 100;
+            decimal days = years * (decimal)365.2422;
+            BigInteger hours = (BigInteger)days * 24;
+            BigInteger minutes = hours * 60;
+
+            Console.WriteLine($"{n} centuries = {years} years = {(BigInteger)days} days = {hours} hours = {minutes} minutes");
+            
+09. Chars to String
+Write a program that reads 3 lines of input. On each line you get a single character.
+Combine all the characters into one string and print it on the console.
+
+            char a = char.Parse(Console.ReadLine());
+            char b = char.Parse(Console.ReadLine());
+            char c = char.Parse(Console.ReadLine());
+
+            string text = a.ToString() + b.ToString() + c.ToString();
+
+            Console.WriteLine(text);
+            
+10. Lower or Upper
+Write a program that prints whether a given character is upper-case or lower case.
+
+            char a = char.Parse(Console.ReadLine());
+
+            if ((int)a >= 65 && (int)a <= 90)
+            {
+                Console.WriteLine("upper-case");
+            }
+            else
+            {
+                Console.WriteLine("lower-case");
+            }
