@@ -1,0 +1,21 @@
+Write a program to read an integer n and for all numbers in the range 1…n to print the number
+and if it is special or not (True / False).  "{n} -> {True/False}"
+
+            int n = int.Parse(Console.ReadLine());
+
+            for (int i = 1; i <= n; i++)
+            {
+                int currentNum = i;
+                int sumDigits = 0;
+
+                while (currentNum > 0)
+                {
+                    int lastDigit = currentNum % 10;
+                    sumDigits += lastDigit;
+                    currentNum /= 10;
+                }
+
+                bool isSpecial = sumDigits == 5 || sumDigits == 7 || sumDigits == 11;
+
+                Console.WriteLine($"{i} -> {isSpecial}");
+            }
