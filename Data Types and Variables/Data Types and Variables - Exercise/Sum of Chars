@@ -1,0 +1,12 @@
+Write a program, which sums the ASCII codes of n characters and prints the sum on the console.
+
+            int n = int.Parse(Console.ReadLine());
+            int totalSum = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                char symbol = char.Parse(Console.ReadLine());
+                totalSum += symbol;
+            }
+
+            Console.WriteLine($"The sum equals: {totalSum}");
