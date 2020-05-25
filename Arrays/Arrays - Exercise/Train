@@ -1,0 +1,9 @@
+            int countWagons = int.Parse(Console.ReadLine());
+            int[] peopleInWagons = new int[countWagons];
+
+            for (int i = 0; i < countWagons; i++)
+            {
+                peopleInWagons[i] = int.Parse(Console.ReadLine());
+            }
+            Console.WriteLine(string.Join(" ", peopleInWagons));
+            Console.WriteLine(peopleInWagons.Sum());
