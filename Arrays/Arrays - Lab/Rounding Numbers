@@ -1,0 +1,8 @@
+Read an array of real numbers (space separated), round them in "away from 0" style and print the output as in the examples:
+
+            double[] numbers = Console.ReadLine().Split(" ").Select(double.Parse).ToArray();
+
+            foreach (var item in numbers)
+            {
+                Console.WriteLine($"{item} => {Math.Round(item, MidpointRounding.AwayFromZero)}");
+            }
