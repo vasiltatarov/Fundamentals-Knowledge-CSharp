@@ -1,0 +1,19 @@
+⦁	Day of Week
+Enter a day number [1…7] and print the name (in English) or "Invalid day!"
+
+⦁	Rounding Numbers
+Read an array of real numbers (space separated), round them in "away from 0" style and print the output as in the examples:
+
+⦁	Even and Odd Subtraction
+Write a program that calculates the difference between the sum of the even and the sum of the odd numbers in an array.
+
+⦁	Equal Arrays
+Read two arrays and print on the console whether they are identical or not. Arrays are identical if their elements are equal.
+If the arrays are identical find the sum of the first one and print on the console following message:
+"Arrays are identical. Sum: {sum}", otherwise find the first index where the arrays differ and print on the console following message:
+"Arrays are not identical. Found difference at {index} index".
+
+⦁	Condense Array to Number
+Write a program to read an array of integers and condense them by summing adjacent couples of elements until a single integer is obtained.
+For example, if we have 3 elements {2, 10, 3}, we sum the first two and the second two elements and obtain {2+10, 10+3} = {12, 13},
+then we sum again all adjacent elements and obtain {12+13} = {25}.
