@@ -1,0 +1,24 @@
+            int[] numbers = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                int currentNumber = numbers[i];
+                bool isTop = true;
+
+                for (int j = i + 1; j < numbers.Length; j++)
+                {
+                    if (currentNumber > numbers[j])
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        isTop = false;
+                    }
+                }
+
+                if (isTop)
+                {
+                    Console.Write($"{currentNumber} ");
+                }
+            }
