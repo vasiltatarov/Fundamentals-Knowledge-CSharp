@@ -1,0 +1,34 @@
+You will receive number which represent how many lines we will get as an input. On the next N lines, you will receive a
+string with 2 numbers separated by single space. You need to compare them. If the left number is greater than the right number,
+you need to print the sum of all digits in the left number, otherwise print the sum of all digits in the right number.
+
+            int n = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < n; i++)
+            {
+                long[] numbers = Console.ReadLine().Split(" ").Select(long.Parse).ToArray();
+
+                long leftNumber = numbers[0];
+                long rightNumber = numbers[1];
+
+                long side = 0;
+
+                if (leftNumber > rightNumber)
+                {
+                    side = leftNumber;
+                }
+                else
+                {
+                    side = rightNumber;
+                }
+
+                long allDigit = 0;
+
+                while (side != 0)
+                {
+                    allDigit += side % 10;
+                    side /= 10;
+                }
+
+                Console.WriteLine(Math.Abs(allDigit));
+            }
