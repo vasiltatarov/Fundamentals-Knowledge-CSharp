@@ -1,0 +1,14 @@
+            string[] textOne = Console.ReadLine().Split(" ");
+            string[] textTwo = Console.ReadLine().Split(" ");
+
+            string result = string.Empty;
+
+            for (int i = 0; i < textTwo.Length; i++)
+            {
+                if (textOne.Contains(textTwo[i]))
+                {
+                    result += textTwo[i] + " ";
+                }
+            }
+
+            Console.WriteLine(result);
