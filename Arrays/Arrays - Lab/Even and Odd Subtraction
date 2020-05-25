@@ -1,0 +1,20 @@
+Write a program that calculates the difference between the sum of the even and the sum of the odd numbers in an array.
+
+            int[] numbers = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+            int sumEvenNumbers = 0;
+            int sumOddNumbers = 0;
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] % 2 == 0)
+                {
+                    sumEvenNumbers += numbers[i];
+                }
+                else
+                {
+                    sumOddNumbers += numbers[i];
+                }
+            }
+
+            int diff = sumEvenNumbers - sumOddNumbers;
+            Console.WriteLine(diff);
