@@ -1,0 +1,16 @@
+You will receive a key (integer) and n characters afterward. Add the key to each of the characters and append them to a message.
+At the end print the message, which you decrypted. Print the decrypted message.
+
+            int key = int.Parse(Console.ReadLine());
+            int countCharacters = int.Parse(Console.ReadLine());
+
+            string result = string.Empty;
+
+            for (int i = 1; i <= countCharacters; i++)
+            {
+                char character = char.Parse(Console.ReadLine());
+
+                result += (char)(character + key);
+            }
+
+            Console.WriteLine(result);
