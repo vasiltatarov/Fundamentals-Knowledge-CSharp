@@ -1,5 +1,3 @@
-Write a program that calculates the difference between the sum of the even and the sum of the odd numbers in an array.
-
             int[] numbers = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
             int sumEvenNumbers = 0;
             int sumOddNumbers = 0;
