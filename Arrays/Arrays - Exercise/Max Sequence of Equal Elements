@@ -1,0 +1,29 @@
+            int[] numbers = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+            int currentSequenceLength = 0;
+            int maxSequenceLength = 0;
+            int element = numbers[0];
+
+            for (int i = 0; i < numbers.Length - 1; i++)
+            {
+                int currentElement = numbers[i];
+
+                if (numbers[i + 1] == currentElement)
+                {
+                    currentSequenceLength++;
+
+                    if (currentSequenceLength > maxSequenceLength)
+                    {
+                        maxSequenceLength = currentSequenceLength;
+                        element = currentElement;
+                    }
+                }
+                else
+                {
+                    currentSequenceLength = 0;
+                }
+            }
+
+            for (int i = 0; i <= maxSequenceLength; i++)
+            {
+                Console.Write(element + " ");
+            }
