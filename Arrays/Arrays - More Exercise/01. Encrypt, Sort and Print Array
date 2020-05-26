@@ -1,0 +1,28 @@
+            int countOfSequence = int.Parse(Console.ReadLine());
+            int[] namesValues = new int[countOfSequence];
+
+            for (int i = 0; i < namesValues.Length; i++)
+            {
+                string name = Console.ReadLine();
+                int nameLength = name.Length;
+                int currentSum = 0;
+
+                foreach (var symbol in name)
+                {
+                    if (symbol == 'a' || symbol == 'A' || symbol == 'E' || symbol == 'e' || symbol == 'I' || symbol == 'i' || symbol == 'o' || symbol == 'O' || symbol == 'U' || symbol == 'u')
+                    {
+                        currentSum += symbol * nameLength;
+                    }
+                    else
+                    {
+                        currentSum += symbol / nameLength;
+                    }
+                }
+
+                namesValues[i] = currentSum;
+            }
+
+            foreach (var item in namesValues.OrderBy(x => x))
+            {
+                Console.WriteLine(item);
+            }
