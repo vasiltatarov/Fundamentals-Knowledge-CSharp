@@ -1,0 +1,70 @@
+            int sizeOfField = int.Parse(Console.ReadLine());
+            int[] ladybugsIndexes = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+            var result = new int[sizeOfField];
+
+            for (int i = 0; i < ladybugsIndexes.Length; i++)
+            {
+                result[ladybugsIndexes[i]] = 1;
+            }
+
+            string command = Console.ReadLine();
+            while (command != "end")
+            {
+                string[] ladybugFly = command.Split(" ");
+
+                int ladybugIndex = int.Parse(ladybugFly[0]);
+                string direction = ladybugFly[1];
+                int flyLength = int.Parse(ladybugFly[2]);
+
+                if (ladybugIndex >= 0 && ladybugIndex < result.Length)
+                {
+                    if (direction == "right")
+                    {
+                        if (result[ladybugIndex] == 1)
+                        {
+                            result[ladybugIndex] = 0;
+                        }
+
+                        flyLength += ladybugIndex;
+
+                        while (flyLength >= 0 && flyLength < result.Length)
+                        {
+                            if (result[flyLength] == 0)
+                            {
+                                result[flyLength] = 1;
+                                break;
+                            }
+                            else
+                            {
+                                flyLength++;
+                            }
+                        }
+                    }
+                    else if (direction == "left")
+                    {
+                        if (result[ladybugIndex] == 1)
+                        {
+                            result[ladybugIndex] = 0;
+                        }
+
+                        flyLength = ladybugIndex - flyLength;
+
+                        while (flyLength >= 0 && flyLength < result.Length)
+                        {
+                            if (result[flyLength] == 0)
+                            {
+                                result[flyLength] = 1;
+                                break;
+                            }
+                            else
+                            {
+                                flyLength--;
+                            }
+                        }
+                    }
+                }
+
+                command = Console.ReadLine();
+            }
+
+            Console.WriteLine(string.Join(" ", result));
