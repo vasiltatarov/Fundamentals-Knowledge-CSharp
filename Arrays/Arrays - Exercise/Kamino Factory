@@ -1,0 +1,52 @@
+            int dnaLength = int.Parse(Console.ReadLine());
+            int[] bestDna = new int[dnaLength];
+            int bestDnaLength = 0;
+            int bestDnaIndex = int.MaxValue;
+            int sample = 0;
+            int bestSample = 0;
+            int bestDnaSum = 0;
+
+            string command = Console.ReadLine();
+            while (command != "Clone them!")
+            {
+                int[] dna = command.Split("!").Select(int.Parse).ToArray();
+
+                if (dna.Length == dnaLength)
+                {
+                    int currentDnaLength = 0;
+                    int currentDnaIndex = 0;
+                    int currentDnaSum = dna.Sum();
+                    sample++;
+
+                    for (int i = 0; i < dna.Length - 1; i++)
+                    {
+                        if (dna[i] == 1 && dna[i + 1] == 1)
+                        {
+                            currentDnaLength++;
+                            currentDnaIndex = i;
+                        }
+                    }
+
+                    if (currentDnaLength >= bestDnaLength)
+                    {
+                        if (currentDnaIndex < bestDnaIndex)
+                        {
+                            bestDnaLength = currentDnaLength;
+                            bestDnaIndex = currentDnaIndex;
+                            bestDna = dna;
+                            bestSample = sample;
+                            bestDnaSum = currentDnaSum;
+                        }
+                        else if (currentDnaIndex == bestDnaIndex && currentDnaSum > bestDnaSum)
+                        {
+                            bestDna = dna;
+                            bestSample = sample;
+                        }
+                    }
+                }
+                
+                command = Console.ReadLine();
+            }
+
+            Console.WriteLine($"Best DNA sample {bestSample} with sum: {bestDna.Sum()}.");
+            Console.WriteLine(string.Join(" ", bestDna));
