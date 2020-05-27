@@ -1,0 +1,11 @@
+            string removeWord = Console.ReadLine();
+            string text = Console.ReadLine();
+
+            while (text.ToLower().IndexOf(removeWord.ToLower()) != -1)
+            {
+                int index = text.ToLower().IndexOf(removeWord.ToLower());
+                var newText = text.Remove(index, removeWord.Length);
+                text = newText;
+            }
+
+            Console.WriteLine(text);
