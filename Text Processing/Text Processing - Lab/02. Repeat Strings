@@ -1,0 +1,14 @@
+            string[] words = Console.ReadLine().Split(" ");
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < words.Length; i++)
+            {
+                int repeat = words[i].Length;
+
+                for (int k = 0; k < repeat; k++)
+                {
+                    result.Append(words[i]);
+                }
+            }
+
+            Console.WriteLine(result);
