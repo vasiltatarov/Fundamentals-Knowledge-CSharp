@@ -1,0 +1,27 @@
+            string text = Console.ReadLine();
+            string result = string.Empty;
+            bool isMoreThenOneLetter = false;
+
+            for (int i = 0; i < text.Length - 1; i++)
+            {
+                if (text[i] != text[i + 1])
+                {
+                    result += text[i];
+                    isMoreThenOneLetter = true;
+                }
+            }
+
+            if (isMoreThenOneLetter)
+            {
+                if (text[text.Length - 1] != result[result.Length - 1])
+                {
+                    result += text[text.Length - 1];
+                }
+            }
+
+            if (!isMoreThenOneLetter)
+            {
+                result += text[0];
+            }
+
+            Console.WriteLine(result);
