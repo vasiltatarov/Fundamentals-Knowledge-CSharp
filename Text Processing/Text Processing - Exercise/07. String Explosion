@@ -1,0 +1,26 @@
+            string line = Console.ReadLine();
+
+            string[] splitedLine = line.Split(">");
+
+            string result = splitedLine[0];
+            int remainingPower = 0;
+
+            for (int i = 1; i < splitedLine.Length; i++)
+            {
+                result += '>';
+
+                string currentSrting = splitedLine[i];
+                char digitSymbol = currentSrting[0];
+                int power = int.Parse(digitSymbol.ToString()) + remainingPower;
+
+                if (power > currentSrting.Length)
+                {
+                    remainingPower = power - currentSrting.Length;
+                }
+                else
+                {
+                    result += currentSrting.Substring(power);
+                }
+            }
+
+            Console.WriteLine(result);
