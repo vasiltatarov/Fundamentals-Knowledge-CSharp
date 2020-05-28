@@ -1,0 +1,19 @@
+            string[] strArgs = Console.ReadLine().Split(" ");
+            string minStr = strArgs[0];
+            string maxStr = strArgs[1];
+
+            int result = 0;
+            int minCounter = Math.Min(minStr.Length, maxStr.Length);
+            int maxCounter = Math.Max(minStr.Length, maxStr.Length);
+
+            for (int i = 0; i < minCounter; i++)
+            {
+                result += minStr[i] * maxStr[i];
+            }
+
+            for (int i = minCounter; i < maxCounter; i++)
+            {
+                result += maxStr[i];
+            }
+
+            Console.WriteLine(result);
