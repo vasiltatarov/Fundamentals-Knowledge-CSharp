@@ -1,0 +1,33 @@
+            int[] key = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+
+            string line = Console.ReadLine();
+            while (line != "find")
+            {
+                string text = string.Empty;
+                string type = string.Empty;
+                string coordinates = string.Empty;
+                int keyCount = 0;
+
+                for (int i = 0; i < line.Length; i++)
+                {
+                    if (keyCount >= key.Length)
+                    {
+                        keyCount = 0;
+                    }
+
+                    text += (char)(line[i] - key[keyCount]);
+                    keyCount++;
+                }
+
+                int firstIndexOfType = text.IndexOf('&') + 1;
+                int lastIndexOfType = text.LastIndexOf('&');
+                type = text.Substring(firstIndexOfType, lastIndexOfType - firstIndexOfType);
+
+                int firstIndexOfCoordinates = text.IndexOf('<') + 1;
+                int lastIndexOfCoordinates = text.LastIndexOf('>');
+                coordinates = text.Substring(firstIndexOfCoordinates, lastIndexOfCoordinates - firstIndexOfCoordinates);
+
+                Console.WriteLine($"Found {type} at {coordinates}");
+
+                line = Console.ReadLine();
+            }
