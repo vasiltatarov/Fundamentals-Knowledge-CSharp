@@ -1,0 +1,27 @@
+            byte n = byte.Parse(Console.ReadLine());
+            BigInteger highterValue = 0;
+            int snowballSnowBest = 0;
+            int snowballTimeBest = 0;
+            int snowballQualityBest = 0;
+
+            for (int i = 1; i <= n; i++)
+            {
+                int snowballSnow = int.Parse(Console.ReadLine());
+                int snowballTime = int.Parse(Console.ReadLine());
+                int snowballQuality = int.Parse(Console.ReadLine());
+
+                if (snowballTime != 0)
+                {
+                    BigInteger snowballValue = BigInteger.Pow((snowballSnow / snowballTime), snowballQuality);
+
+                    if (snowballValue > highterValue)
+                    {
+                        highterValue = snowballValue;
+                        snowballSnowBest = snowballSnow;
+                        snowballTimeBest = snowballTime;
+                        snowballQualityBest = snowballQuality;
+                    }
+                }
+            }
+
+            Console.WriteLine($"{snowballSnowBest} : {snowballTimeBest} = {highterValue} ({snowballQualityBest})");
