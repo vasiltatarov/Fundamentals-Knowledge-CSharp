@@ -1,0 +1,80 @@
+            string[] morseCode = Console.ReadLine().Split(new[] { ' '},StringSplitOptions.RemoveEmptyEntries);
+            string morseCodeEncrypted = string.Empty;
+
+            for (int i = 0; i < morseCode.Length; i++)
+            {
+                if (morseCode[i] == "..")
+                {
+                    morseCodeEncrypted += 'I';
+                }
+                else if (morseCode[i] == "|")
+                {
+                    morseCodeEncrypted += ' ';
+                }
+                else if (morseCode[i] == "--")
+                {
+                    morseCodeEncrypted += 'M';
+                }
+                else if (morseCode[i] == ".-")
+                {
+                    morseCodeEncrypted += 'A';
+                }
+                else if (morseCode[i] == "-..")
+                {
+                    morseCodeEncrypted += 'D';
+                }
+                else if (morseCode[i] == ".")
+                {
+                    morseCodeEncrypted += 'E';
+                }
+                else if (morseCode[i] == "-.--")
+                {
+                    morseCodeEncrypted += 'Y';
+                }
+                else if (morseCode[i] == "---")
+                {
+                    morseCodeEncrypted += 'O';
+                }
+                else if (morseCode[i] == "..-")
+                {
+                    morseCodeEncrypted += 'U';
+                }
+                else if (morseCode[i] == ".--")
+                {
+                    morseCodeEncrypted += 'W';
+                }
+                else if (morseCode[i] == ".-.")
+                {
+                    morseCodeEncrypted += 'R';
+                }
+                else if (morseCode[i] == "-")
+                {
+                    morseCodeEncrypted += 'T';
+                }
+                else if (morseCode[i] == ".-..")
+                {
+                    morseCodeEncrypted += 'L';
+                }
+                else if (morseCode[i] == "--.")
+                {
+                    morseCodeEncrypted += 'G';
+                }
+                else if (morseCode[i] == "-.")
+                {
+                    morseCodeEncrypted += 'N';
+                }
+                else if (morseCode[i] == "-.-.")
+                {
+                    morseCodeEncrypted += 'C';
+                }
+                else if (morseCode[i] == "....")
+                {
+                    morseCodeEncrypted += 'H';
+                }
+                else if (morseCode[i] == ".--.")
+                {
+                    morseCodeEncrypted += 'P';
+                }
+            }
+
+            Console.WriteLine(morseCodeEncrypted);
