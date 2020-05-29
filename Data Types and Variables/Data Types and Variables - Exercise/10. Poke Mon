@@ -1,0 +1,23 @@
+            int pokePower = int.Parse(Console.ReadLine());
+            int distance = int.Parse(Console.ReadLine());
+            int exhaustionFactor = int.Parse(Console.ReadLine());
+
+            int halfPokePower = pokePower / 2;
+            int countTargetPockedSucsessfully = 0;
+
+            while (pokePower >= distance)
+            {
+                pokePower -= distance;
+                countTargetPockedSucsessfully++;
+
+                if (pokePower == halfPokePower)
+                {
+                    if (exhaustionFactor != 0)
+                    {
+                        pokePower /= exhaustionFactor;
+                    }
+                }
+            }
+
+            Console.WriteLine(pokePower);
+            Console.WriteLine(countTargetPockedSucsessfully);
