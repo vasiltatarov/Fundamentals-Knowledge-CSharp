@@ -1,0 +1,223 @@
+        static void Main()
+        {
+            int[] numbers = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+
+            string command = Console.ReadLine();
+            while (command != "end")
+            {
+                string[] commandArgs = command.Split(" ");
+
+                if (commandArgs[0] == "exchange")
+                {
+                    int index = int.Parse(commandArgs[1]);
+
+                    if (index >= 0 && index < numbers.Length)
+                    {
+                        numbers = GetExchange(numbers, index);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid index");
+                    }
+                }
+                else if (commandArgs[0] == "max")
+                {
+                    int evenOrOdd;
+
+                    if (commandArgs[1] == "even")
+                    {
+                        evenOrOdd = 0;
+                        MaxEvenOrOddIndex(numbers, evenOrOdd);
+                    }
+                    else if (commandArgs[1] == "odd")
+                    {
+                        evenOrOdd = 1;
+                        MaxEvenOrOddIndex(numbers, evenOrOdd);
+                    }
+                }
+                else if (commandArgs[0] == "min")
+                {
+                    int evenOrOdd;
+
+                    if (commandArgs[1] == "even")
+                    {
+                        evenOrOdd = 0;
+                        MinEvenOrOddIndex(numbers, evenOrOdd);
+                    }
+                    else if (commandArgs[1] == "odd")
+                    {
+                        evenOrOdd = 1;
+                        MinEvenOrOddIndex(numbers, evenOrOdd);
+                    }
+                }
+                else if (commandArgs[0] == "first")
+                {
+                    int count = int.Parse(commandArgs[1]);
+                    int evenOrOdd;
+
+                    if (count >= 0 && count <= numbers.Length)
+                    {
+                        if (commandArgs[2] == "even")
+                        {
+                            evenOrOdd = 0;
+                            FirstEvenOrOdd(numbers, count, evenOrOdd);
+                        }
+                        else if (commandArgs[2] == "odd")
+                        {
+                            evenOrOdd = 1;
+                            FirstEvenOrOdd(numbers, count, evenOrOdd);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid count");
+                    }
+                }
+                else if (commandArgs[0] == "last")
+                {
+                    int count = int.Parse(commandArgs[1]);
+                    int evenOrOdd;
+
+                    if (count >= 0 && count <= numbers.Length)
+                    {
+                        if (commandArgs[2] == "even")
+                        {
+                            evenOrOdd = 0;
+                            LastEvenOrOdd(numbers, count, evenOrOdd);
+                        }
+                        else if (commandArgs[2] == "odd")
+                        {
+                            evenOrOdd = 1;
+                            LastEvenOrOdd(numbers, count, evenOrOdd);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid count");
+                    }
+                }
+
+                command = Console.ReadLine();
+            }
+
+            Console.WriteLine($"[{string.Join(", ", numbers)}]");
+        }
+
+        public static void LastEvenOrOdd(int[] numbers, int count, int evenOrOdd)
+        {
+            List<int> lastEvenOrOdd = new List<int>();
+
+            for (int i = numbers.Length - 1; i >= 0; i--)
+            {
+                if (numbers[i] % 2 == evenOrOdd)
+                {
+                    if (count == 0)
+                    {
+                        break;
+                    }
+
+                    lastEvenOrOdd.Add(numbers[i]);
+                    count--;
+                }
+            }
+
+            Console.WriteLine($"[{string.Join(", ", lastEvenOrOdd)}]");
+        }
+
+        public static void FirstEvenOrOdd(int[] numbers, int count, int evenOrOdd)
+        {
+            List<int> firstEvenOrOdd = new List<int>();
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] % 2 == evenOrOdd)
+                {
+                    if (count == 0)
+                    {
+                        break;
+                    }
+
+                    firstEvenOrOdd.Add(numbers[i]);
+                    count--;
+                }
+            }
+
+            Console.WriteLine($"[{string.Join(", ",firstEvenOrOdd)}]");
+        }
+
+        public static void MinEvenOrOddIndex(int[] numbers, int evenOrOdd)
+        {
+            int currentNumber = int.MaxValue;
+            int maxIndex = 0;
+            bool isExist = false;
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] % 2 == evenOrOdd)
+                {
+                    if (numbers[i] <= currentNumber)
+                    {
+                        currentNumber = numbers[i];
+                        maxIndex = i;
+                        isExist = true;
+                    }
+                }
+            }
+
+            if (isExist)
+            {
+                Console.WriteLine(maxIndex);
+            }
+            else
+            {
+                Console.WriteLine("No matches");
+            }
+        }
+
+        public static void MaxEvenOrOddIndex(int[] numbers, int evenOrOdd)
+        {
+            int currentNumber = int.MinValue;
+            int maxIndex = 0;
+            bool isExist = false;
+
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                if (numbers[i] % 2 == evenOrOdd)
+                {
+                    if (numbers[i] >= currentNumber)
+                    {
+                        currentNumber = numbers[i];
+                        maxIndex = i;
+                        isExist = true;
+                    }
+                }
+            }
+
+            if (isExist)
+            {
+                Console.WriteLine(maxIndex);
+            }
+            else
+            {
+                Console.WriteLine("No matches");
+            }
+        }
+
+        public static int[] GetExchange(int[] numbers, int index)
+        {
+            int[] exchangeNumbers = numbers;
+
+            for (int i = 0; i <= index; i++)
+            {
+                int firstNumber = numbers[0];
+
+                for (int j = 0; j < numbers.Length - 1; j++)
+                {
+                    numbers[j] = numbers[j + 1];
+                }
+
+                numbers[numbers.Length - 1] = firstNumber;
+            }
+
+            return exchangeNumbers;
+        }
