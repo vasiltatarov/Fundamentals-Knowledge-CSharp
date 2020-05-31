@@ -1,0 +1,33 @@
+        static void Main()
+        {
+            string command = Console.ReadLine();
+
+            while (command != "END")
+            {
+                uint number = uint.Parse(command);
+
+                IsPalindrome(number);
+
+                command = Console.ReadLine();
+            }
+        }
+
+        static void IsPalindrome(uint number)
+        {
+            var currentNum = number.ToString();
+
+            bool isPalindrome = currentNum[0] == currentNum[currentNum.Length - 1];
+
+            if (isPalindrome)
+            {
+                Console.WriteLine("true");
+
+                return;
+            }
+            else
+            {
+                Console.WriteLine("false");
+
+                return;
+            }
+        }
