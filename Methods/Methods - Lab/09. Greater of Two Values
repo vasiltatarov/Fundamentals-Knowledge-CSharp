@@ -1,0 +1,52 @@
+        static void Main()
+        {
+            string type = Console.ReadLine();
+
+            if (type == "int")
+            {
+                int[] maxInt = new int[2];
+                Console.WriteLine(GetMaxInt(maxInt));
+            }
+            else if (type == "char")
+            {
+                char[] maxChar = new char[2];
+                Console.WriteLine(GetMaxChar(maxChar));
+            }
+            else if (type == "string")
+            {
+                string[] maxStr = new string[2];
+                Console.WriteLine(GetMaxString(maxStr));
+            }
+        }
+
+        static int GetMaxInt(int[] maxInt)
+        {
+            maxInt[0] = int.Parse(Console.ReadLine());
+            maxInt[1] = int.Parse(Console.ReadLine());
+            return Math.Max(maxInt[0], maxInt[1]);
+        }
+
+        static char GetMaxChar(char[] maxChar)
+        {
+            maxChar[0] = char.Parse(Console.ReadLine());
+            maxChar[1] = char.Parse(Console.ReadLine());
+            return (char)Math.Max(maxChar[0], maxChar[1]);
+        }
+
+        static string GetMaxString(string[] maxStr)
+        {
+            maxStr[0] = Console.ReadLine();
+            maxStr[1] = Console.ReadLine();
+            var orderedStr = maxStr.OrderBy(x => x);
+
+
+            int comparison = maxStr[0].CompareTo(maxStr[1]);
+            if (comparison > 0)
+            {
+                return maxStr[0];
+            }
+            else
+            {
+                return maxStr[1];
+            }
+        }
