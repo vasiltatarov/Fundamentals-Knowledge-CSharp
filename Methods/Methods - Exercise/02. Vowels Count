@@ -1,0 +1,23 @@
+        static void Main()
+        {
+            string text = Console.ReadLine();
+
+            int vowels = GetVowels(text);
+
+            Console.WriteLine(vowels);
+        }
+
+        static int GetVowels(string text)
+        {
+            int vowels = 0;
+
+            foreach (var symbol in text.ToLower())
+            {
+                if (symbol == 'a' || symbol == 'e' || symbol == 'i' || symbol == 'o' || symbol == 'u')
+                {
+                    vowels++;
+                }
+            }
+
+            return vowels;
+        }
