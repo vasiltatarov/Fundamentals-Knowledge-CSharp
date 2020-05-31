@@ -1,0 +1,29 @@
+        static void Main()
+        {
+            int firstNum = int.Parse(Console.ReadLine());
+            int secondNum = int.Parse(Console.ReadLine());
+
+            int firstNumFacturial = GetFacturial(firstNum);
+            int secondNumFacturial = GetFacturial(secondNum);
+
+            double devideFact = devideFacturials(firstNumFacturial, secondNumFacturial);
+
+            Console.WriteLine($"{devideFact:F2}");
+        }
+
+        static int GetFacturial(int number)
+        {
+            int fact = 1;
+
+            for (int i = 2; i <= number; i++)
+            {
+                fact *= i;
+            }
+
+            return fact;
+        }
+
+        static double devideFacturials(double first, double second)
+        {
+            return first / second;
+        }
