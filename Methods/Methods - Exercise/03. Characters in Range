@@ -1,0 +1,15 @@
+        static void Main()
+        {
+            char firstChar = char.Parse(Console.ReadLine());
+            char secondChar = char.Parse(Console.ReadLine());
+
+            PrintCharacterInRange(firstChar, secondChar);
+        }
+
+        static void PrintCharacterInRange(char first, char second)
+        {
+            for (int i = (Math.Min(first, second)) + 1; i < Math.Max(first, second); i++)
+            {
+                Console.Write((char)i + " ");
+            }
+        }  
