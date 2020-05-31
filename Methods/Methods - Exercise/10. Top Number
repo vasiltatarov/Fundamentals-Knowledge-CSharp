@@ -1,0 +1,40 @@
+        static void Main()
+        {
+            int n = int.Parse(Console.ReadLine());
+
+            for (int i = 1; i <= n; i++)
+            {
+                bool isTop = CheckNumberIsTop(i);
+
+                if (isTop)
+                {
+                    Console.WriteLine(i);
+                }
+            }
+        }
+
+        static bool CheckNumberIsTop(int number)
+        {
+            int sumDigits = 0;
+            bool minimunOneOdd = false;
+
+            while (number > 0)
+            {
+                int lastDigit = number % 10;
+                sumDigits += lastDigit;
+
+                if (lastDigit % 2 == 1)
+                {
+                    minimunOneOdd = true;
+                }
+
+                number /= 10;
+            }
+
+            if (minimunOneOdd && sumDigits % 8 == 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
