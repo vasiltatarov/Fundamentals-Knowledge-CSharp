@@ -1,0 +1,14 @@
+            Regex regex = new Regex(@"\b(?<day>\d{2})(.|-|\/)(?<month>[A-Za-z]+)\1(?<year>\d{4})\b");
+
+            var phoneNumbers = Console.ReadLine();
+
+            var matchedRegex = regex.Matches(phoneNumbers);
+
+            foreach (Match data in matchedRegex)
+            {
+                var day = data.Groups["day"].Value;
+                var month = data.Groups["month"].Value;
+                var year = data.Groups["year"].Value;
+
+                Console.WriteLine($"Day: {day}, Month: {month}, Year: {year}");
+            }
