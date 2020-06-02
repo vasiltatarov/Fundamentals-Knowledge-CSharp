@@ -1,78 +1,84 @@
-    class Program
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+class Program
+{
+    static void Main()
     {
-        static void Main()
+        var atacked = new List<Planet>();
+        var destroyed = new List<Planet>();
+
+        int n = int.Parse(Console.ReadLine());
+        string countPattern = @"S|s|T|t|A|a|R|r";
+        //string planetPattern = @".*@(?<planet>[A-Za-z]+).*:(?<population>\d+)!(?<type>[A|D]{1})!->(?<soldier>\d+).*";
+        string planetPattern = @".*@(?<planet>[A-Za-z]+).*:(?<population>\d+).*!(?<type>[A|D]{1}).*!->(?<soldier>\d+).*";
+
+        for (int i = 0; i < n; i++)
         {
-            var atacked = new List<Planet>();
-            var destroyed = new List<Planet>();
+            string message = Console.ReadLine();
 
-            int n = int.Parse(Console.ReadLine());
-            string countPattern = @"S|s|T|t|A|a|R|r";
-            string planetPattern = @".*@(?<planet>[A-Za-z]+).*:(?<population>\d+)!(?<type>[A|D]{1})!->(?<soldier>\d+).*";
+            var matchForDecrypt = Regex.Matches(message, countPattern);
 
-            for (int i = 0; i < n; i++)
+            int countForRemove = matchForDecrypt.Count;
+            string result = string.Empty;
+
+            foreach (var item in message)
             {
-                string message = Console.ReadLine();
+                result += (char)(item - countForRemove);
+            }
 
-                var matchForDecrypt = Regex.Matches(message, countPattern);
+            Match matchPlanet = Regex.Match(result, planetPattern);
 
-                int countForRemove = matchForDecrypt.Count;
-                string result = string.Empty;
+            if (matchPlanet.Success)
+            {
+                var planetName = matchPlanet.Groups["planet"].Value;
+                var population = int.Parse(matchPlanet.Groups["population"].Value);
+                var type = char.Parse(matchPlanet.Groups["type"].Value);
+                var soldier = int.Parse(matchPlanet.Groups["soldier"].Value);
 
-                foreach (var item in message)
+                Planet newPlanet = new Planet(planetName, population, type, soldier);
+
+                if (newPlanet.AtackType == 'A')
                 {
-                    result += (char)(item - countForRemove);
+                    atacked.Add(newPlanet);
                 }
-
-                Match matchPlanet = Regex.Match(result, planetPattern);
-
-                if (matchPlanet.Success)
+                else
                 {
-                    var planetName = matchPlanet.Groups["planet"].Value;
-                    var population = int.Parse(matchPlanet.Groups["population"].Value);
-                    var type = char.Parse(matchPlanet.Groups["type"].Value);
-                    var soldier = int.Parse(matchPlanet.Groups["soldier"].Value);
-
-                    Planet newPlanet = new Planet(planetName, population, type, soldier);
-
-                    if (newPlanet.AtackType == 'A')
-                    {
-                        atacked.Add(newPlanet);
-                    }
-                    else
-                    {
-                        destroyed.Add(newPlanet);
-                    }
+                    destroyed.Add(newPlanet);
                 }
             }
+        }
 
-            Console.WriteLine($"Attacked planets: {atacked.Count}");
+        Console.WriteLine($"Attacked planets: {atacked.Count}");
 
-            foreach (var planet in atacked.OrderBy(x => x.Name))
-            {
-                Console.WriteLine($"-> {planet.Name}");
-            }
+        foreach (var planet in atacked.OrderBy(x => x.Name))
+        {
+            Console.WriteLine($"-> {planet.Name}");
+        }
 
-            Console.WriteLine($"Destroyed planets: {destroyed.Count}");
+        Console.WriteLine($"Destroyed planets: {destroyed.Count}");
 
-            foreach (var planet in destroyed.OrderBy(x => x.Name))
-            {
-                Console.WriteLine($"-> {planet.Name}");
-            }
+        foreach (var planet in destroyed.OrderBy(x => x.Name))
+        {
+            Console.WriteLine($"-> {planet.Name}");
         }
     }
+}
 
-    public class Planet
+public class Planet
+{
+    public string Name { get; set; }
+    public int Population { get; set; }
+    public char AtackType { get; set; }
+    public int Soldiers { get; set; }
+
+    public Planet(string name, int population, char type, int soldier)
     {
-        public string Name { get; set; }
-        public int Population { get; set; }
-        public char AtackType { get; set; }
-        public int Soldiers  { get; set; }
-
-        public Planet(string name, int population, char type, int soldier)
-        {
-            Name = name;
-            Population = population;
-            AtackType = type;
-            Soldiers = soldier;
-        }
-    } 
+        Name = name;
+        Population = population;
+        AtackType = type;
+        Soldiers = soldier;
+    }
+}
