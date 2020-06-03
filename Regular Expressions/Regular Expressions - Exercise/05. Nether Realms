@@ -1,0 +1,72 @@
+class Program
+{
+    static void Main()
+    {
+        List<Demon> demons = new List<Demon>();
+
+        string charactersPattern = @"[^0-9-+.\/*]";
+        string digitsPattern = @"-?\d+\.?\d*";
+
+        string[] demonsName = Console.ReadLine().Split(new [] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+
+        for (int i = 0; i < demonsName.Length; i++)
+        {
+            int totalHealth = 0;
+            double damage = 0;
+
+            var matchTotalHealth = Regex.Matches(demonsName[i], charactersPattern);
+            var matchDigit = Regex.Matches(demonsName[i], digitsPattern);
+
+            foreach (Match digit in matchDigit)
+            {
+                damage += double.Parse(digit.Value.ToString());
+            }
+
+            if (damage != 0)
+            {
+                foreach (char @char in demonsName[i])
+                {
+                    if (@char == '*')
+                    {
+                        damage *= 2;
+                    }
+                    else if (@char == '/')
+                    {
+                        if (damage != 0)
+                        {
+                            damage /= 2;
+                        }
+                    }
+                }
+            }
+
+            foreach (Match item in matchTotalHealth)
+            {
+                totalHealth += char.Parse(item.Value.ToString());
+            }
+
+            Demon demon = new Demon(demonsName[i], totalHealth, damage);
+
+            demons.Add(demon);
+        }
+
+        foreach (Demon demon in demons.OrderBy(x => x.Name))
+        {
+            Console.WriteLine($"{demon.Name} - {demon.Health} health, {demon.Damage:f2} damage");
+        }
+    }
+}
+
+public class Demon
+{
+    public string Name { get; set; }
+    public int Health { get; set; }
+    public double Damage { get; set; }
+
+    public Demon(string name, int health, double damage)
+    {
+        Name = name;
+        Health = health;
+        Damage = damage;
+    }
+}
