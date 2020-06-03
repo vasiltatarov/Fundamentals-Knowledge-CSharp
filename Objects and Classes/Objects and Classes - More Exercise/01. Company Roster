@@ -1,0 +1,72 @@
+class Program
+{
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        var company = new Dictionary<string, List<Employee>>();
+
+        for (int i = 0; i < n; i++)
+        {
+            string[] employee = Console.ReadLine().Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+            string name = employee[0];
+            decimal salary = decimal.Parse(employee[1]);
+            string department = employee[2];
+
+            Employee newEmployee = new Employee(name, salary, department);
+
+            if (company.ContainsKey(department))
+            {
+                company[department].Add(newEmployee);
+            }
+            else
+            {
+                company.Add(department, new List<Employee>());
+                company[department].Add(newEmployee);
+            }
+        }
+
+        decimal avgSalary = 0;
+        string bestCompanyName = string.Empty;
+
+        foreach (var comapnys in company)
+        {
+            decimal currentAvg = 0;
+
+            foreach (var item in comapnys.Value)
+            {
+                currentAvg += item.Salary;
+            }
+
+            currentAvg /= comapnys.Value.Count();
+
+            if (currentAvg > avgSalary)
+            {
+                avgSalary = currentAvg;
+                bestCompanyName = comapnys.Key;
+            }
+        }
+
+        Console.WriteLine($"Highest Average Salary: {bestCompanyName}");
+
+        foreach (var employee in company[bestCompanyName].OrderByDescending(x => x.Salary))
+        {
+            Console.WriteLine($"{employee.Name} {employee.Salary:F2}");
+        }
+    }
+}
+
+public class Employee
+{
+    public string Name { get; set; }
+    public decimal Salary { get; set; }
+    public string Department { get; set; }
+
+    public Employee(string name, decimal salary, string department)
+    {
+        Name = name;
+        Salary = salary;
+        Department = department;
+    }
+}
