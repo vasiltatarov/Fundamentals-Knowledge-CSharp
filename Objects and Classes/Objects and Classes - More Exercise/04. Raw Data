@@ -1,0 +1,79 @@
+class Program
+{
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        var cars = new List<Car>();
+
+        for (int i = 0; i < n; i++)
+        {
+            string[] carInfo = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            Engine engine = new Engine(int.Parse(carInfo[1]), int.Parse(carInfo[2]));
+
+            Cargo cargo = new Cargo(int.Parse(carInfo[3]), carInfo[4]);
+
+            Car car = new Car(carInfo[0], engine, cargo);
+
+            cars.Add(car);
+        }
+
+        string command = Console.ReadLine();
+
+        if (command == "fragile")
+        {
+            foreach (Car car in cars.Where(x => x.Cargo.CargoType == "fragile")
+                .Where(x => x.Cargo.CargoWeight < 1000))
+            {
+                Console.WriteLine(car.Model);
+            }
+        }
+        else if (command == "flamable")
+        {
+            foreach (Car car in cars.Where(x => x.Cargo.CargoType == "flamable")
+                .Where(x => x.Engine.EnginePower > 250))
+            {
+                Console.WriteLine(car.Model);
+            }
+        }
+    }
+}
+
+public class Cargo
+{
+    public int CargoWeight { get; set; }
+    public string CargoType { get; set; }
+
+    public Cargo(int Weight, string type)
+    {
+        CargoWeight = Weight;
+        CargoType = type;
+    }
+}
+
+public class Engine
+{
+    public int EnginePower { get; set; }
+    public int EngineSpeed { get; set; }
+
+    public Engine(int speed, int power)
+    {
+        EngineSpeed = speed;
+        EnginePower = power;
+    }
+}
+
+public class Car
+{
+    public string Model { get; set; }
+    public Engine Engine { get; set; }
+    public Cargo Cargo { get; set; }
+
+    public Car(string model, Engine engine, Cargo cargo)
+    {
+        Model = model;
+        Engine = engine;
+        Cargo = cargo;
+    }
+}
