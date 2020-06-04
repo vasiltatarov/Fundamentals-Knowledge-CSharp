@@ -1,0 +1,59 @@
+class Program
+{
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        List<Family> family = new List<Family>();
+
+        for (int i = 0; i < n; i++)
+        {
+            string[] personArgs = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            AddFamilyPerson(personArgs, family);
+        }
+
+        GetOldestMember(family);
+    }
+
+    public static void GetOldestMember(List<Family> family)
+    {
+        foreach (var person in family.OrderByDescending(x => x.ListOfPeople.Age))
+        {
+            Console.WriteLine($"{person.ListOfPeople.Name} {person.ListOfPeople.Age}");
+            return;
+        }
+    }
+
+    public static void AddFamilyPerson(string[] personArgs, List<Family> family)
+    {
+        string name = personArgs[0];
+        int age = int.Parse(personArgs[1]);
+
+        Person person = new Person(name, age);
+        Family newPerson = new Family(person);
+        family.Add(newPerson);
+    }
+}
+
+public class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+
+    public Person(string name, int age)
+    {
+        Name = name;
+        Age = age;
+    }
+}
+
+public class Family
+{
+    public Person ListOfPeople { get; set; }
+
+    public Family(Person person)
+    {
+        ListOfPeople = person;
+    }
+}
