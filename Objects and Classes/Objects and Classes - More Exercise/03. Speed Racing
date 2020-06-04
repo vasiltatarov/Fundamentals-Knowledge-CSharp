@@ -1,0 +1,87 @@
+class Program
+{
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        var cars = new List<Car>();
+
+        for (int i = 0; i < n; i++)
+        {
+            string[] carInfo = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            AddCar(carInfo, cars);
+        }
+
+        string command = Console.ReadLine();
+        while (command != "End")
+        {
+            DistanceCalculate(command, cars);
+
+            command = Console.ReadLine();
+        }
+
+        foreach (Car car in cars)
+        {
+            Console.WriteLine($"{car.Model} {car.FuelAmount:F2} {car.TraveledDistance}");
+        }
+    }
+
+    static void DistanceCalculate(string command, List<Car> cars)
+    {
+        string[] drive = command.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+        string carModel = drive[1];
+        int amountOfKm = int.Parse(drive[2]);
+
+        foreach (Car car in cars)
+        {
+            if (car.Model == carModel)
+            {
+                double currentFuelNeed = amountOfKm * car.FuelConsumptionPer1Km;
+
+                if (car.FuelAmount >= currentFuelNeed)
+                {
+                    car.FuelAmount -= currentFuelNeed;
+                    car.TraveledDistance += amountOfKm;
+                }
+                else
+                {
+                    Console.WriteLine("Insufficient fuel for the drive");
+                }
+            }
+        }
+    }
+
+    static void AddCar(string[] carInfo, List<Car> cars)
+    {
+        string model = carInfo[0];
+        double fuelAmount = double.Parse(carInfo[1]);
+        double fuelConsumptionPer1Km = double.Parse(carInfo[2]);
+
+        Car car = new Car(model, fuelAmount, fuelConsumptionPer1Km);
+
+        cars.Add(car);
+    }
+}
+
+public class Car
+{
+    public string Model { get; set; }
+    public double FuelAmount { get; set; }
+    public double FuelConsumptionPer1Km { get; set; }
+    public int TraveledDistance { get; set; }
+
+    public Car(string model, double fuelAmount, double fuelConsumption)  
+    {
+        Model = model;
+        FuelAmount = fuelAmount;
+        FuelConsumptionPer1Km = fuelConsumption;
+        TraveledDistance = 0;
+    }
+
+    public Car(string model)
+    {
+        Model = model;
+    }
+}
