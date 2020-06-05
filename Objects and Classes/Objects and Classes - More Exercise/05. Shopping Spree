@@ -1,0 +1,116 @@
+class Program
+{
+    static void Main()
+    {
+        var boughtProducts = new Dictionary<string, List<string>>();
+        var persons = new List<Person>();
+        var products = new List<Product>();
+
+        string personInfo = Console.ReadLine();
+        string[] personArgs = personInfo.Split(new char[] { '=', ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+        for (int i = 0; i < personArgs.Length; i += 2)
+        {
+            Person person = new Person(personArgs[i], double.Parse(personArgs[i + 1]));
+
+            persons.Add(person);
+        }
+
+        string productInfo = Console.ReadLine();
+        string[] productArgs = productInfo.Split(new char[] { '=', ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+        for (int i = 0; i < productArgs.Length; i+=2)
+        {
+            Product product = new Product(productArgs[i], double.Parse(productArgs[i + 1]));
+
+            products.Add(product);
+        }
+
+        string command = Console.ReadLine();
+        while (command != "END")
+        {
+            string[] buyingProduct = command.Split(" ");
+
+            double currentPriceOfProduct = 0;
+
+            foreach (Product product in products)
+            {
+                if (product.Name == buyingProduct[1])
+                {
+                    currentPriceOfProduct = product.Cost;
+                }
+            }
+
+            foreach (Person person in persons)
+            {
+                if (person.Name == buyingProduct[0])
+                {
+                    if (person.Money >= currentPriceOfProduct)
+                    {
+                        Console.WriteLine($"{person.Name} bought {buyingProduct[1]}");
+                        person.Money -= currentPriceOfProduct;
+
+                        if (boughtProducts.ContainsKey(person.Name))
+                        {
+                            boughtProducts[person.Name].Add(buyingProduct[1]);
+                        }
+                        else
+                        {
+                            boughtProducts.Add(person.Name, new List<string>());
+                            boughtProducts[person.Name].Add(buyingProduct[1]);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{person.Name} can't afford {buyingProduct[1]}");
+
+                        if (!boughtProducts.ContainsKey(person.Name))
+                        {
+                            boughtProducts.Add(person.Name, new List<string>());
+                        }
+                    }
+                }
+            }
+
+            command = Console.ReadLine();
+        }
+
+        foreach (var item in boughtProducts)
+        {
+            if (item.Value.Count == 0)
+            {
+                Console.WriteLine($"{item.Key} - Nothing bought");
+            }
+            else
+            {
+                Console.WriteLine($"{item.Key} - {string.Join(", ", item.Value)}");
+            }
+        }
+    }
+}
+
+public class Person
+{
+    public string Name { get; set; }
+    public double Money { get; set; }
+    public List<Product> BagOfProducts { get; set; }
+
+
+    public Person(string name, double money)
+    {
+        this.Name = name;
+        this.Money = money;
+    }
+}
+
+public class Product
+{
+    public string Name { get; set; }
+    public double Cost { get; set; }
+
+    public Product(string name, double cost)
+    {
+        this.Name = name;
+        this.Cost = cost;
+    }
+}
