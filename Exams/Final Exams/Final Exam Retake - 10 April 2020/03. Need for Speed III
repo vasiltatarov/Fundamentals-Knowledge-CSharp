@@ -1,0 +1,143 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        var cars = new List<Car>();
+
+        int carsCount = int.Parse(Console.ReadLine());
+
+        for (int i = 0; i < carsCount; i++)
+        {
+            string[] carArgs = Console.ReadLine().Split("|", StringSplitOptions.RemoveEmptyEntries);
+
+            Car car = new Car(carArgs[0], uint.Parse(carArgs[1]), uint.Parse(carArgs[2]));
+            cars.Add(car);
+        }
+
+        string command = Console.ReadLine();
+        while (command != "Stop")
+        {
+            string[] line = command.Split(" : ", StringSplitOptions.RemoveEmptyEntries);
+
+            if (line[0] == "Drive")
+            {
+                string model = line[1];
+                uint distance = uint.Parse(line[2]);
+                uint fuel = uint.Parse(line[3]);
+
+                foreach (Car car in cars)
+                {
+                    if (car.Model == model)
+                    {
+                        if (car.Fuel >= fuel)
+                        {
+                            car.Mileage += distance;
+                            car.Fuel -= fuel;
+
+                            Console.WriteLine($"{car.Model} driven for {distance} kilometers. {fuel} liters of fuel consumed.");
+
+                            if (car.Mileage >= 100000)
+                            {
+                                Console.WriteLine($"Time to sell the {model}!");
+                                cars.Remove(car);
+                            }
+
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Not enough fuel to make that ride");
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+            else if (line[0] == "Refuel")
+            {
+                string model = line[1];
+                uint fuel = uint.Parse(line[2]);
+
+                foreach (Car car in cars)
+                {
+                    if (car.Model == model)
+                    {
+                        if (car.Fuel + fuel > 75)
+                        {
+                            var refuel = 75 - car.Fuel;
+                            car.Fuel = 75;
+
+                            Console.WriteLine($"{model} refueled with {refuel} liters");
+                            break;
+                        }
+                        else
+                        {
+                            car.Fuel += fuel;
+
+                            Console.WriteLine($"{model} refueled with {fuel} liters");
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+            else if (line[0] == "Revert")
+            {
+                string model = line[1];
+                uint kilometers = uint.Parse(line[2]);
+
+                foreach (Car car in cars)
+                {
+                    if (car.Model == model)
+                    {
+                        car.Mileage -= kilometers;
+
+                        if (car.Mileage < 10000)
+                        {
+                            car.Mileage = 10000;
+                            break;
+                        }
+
+                        Console.WriteLine($"{car.Model} mileage decreased by {kilometers} kilometers");
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+
+            command = Console.ReadLine();
+        }
+
+        foreach (Car car in cars.OrderByDescending(x => x.Mileage).ThenBy(x => x.Model))
+        {
+            Console.WriteLine($"{car.Model} -> Mileage: {car.Mileage} kms, Fuel in the tank: {car.Fuel} lt.");
+        }
+    }
+}
+
+public class Car
+{
+    public string Model { get; set; }
+    public uint Mileage { get; set; }
+    public uint Fuel { get; set; }
+
+    public Car(string model, uint mileage, uint fuel)
+    {
+        Model = model;
+        Mileage = mileage;
+        Fuel = fuel;
+    }
+}
