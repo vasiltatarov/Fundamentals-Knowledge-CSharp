@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+
+class Program
+{
+    static void Main()
+    {
+        string text = Console.ReadLine();
+        string pattern = @"(@|#)(?<first>[A-Za-z]{3,})\1{2}(?<second>[A-Za-z]{3,})\1";
+        var mirrorWords = new List<string>();
+
+        var match = Regex.Matches(text, pattern);
+
+        foreach (Match word in match)
+        {
+            var firstWord = word.Groups["first"].Value;
+            var secondWord = word.Groups["second"].Value;
+            var reversedFirstWord = string.Empty;
+
+            for (int i = firstWord.Length - 1; i >= 0; i--)
+            {
+                reversedFirstWord += firstWord[i];
+            }
+
+            var mirrorWord = string.Empty;
+
+            if (reversedFirstWord == secondWord)
+            {
+                mirrorWord = firstWord + " <=> " + secondWord;
+                mirrorWords.Add(mirrorWord);
+            }
+        }
+
+        var validPairsCount = match.Count();
+
+        if (validPairsCount != 0)
+        {
+            Console.WriteLine($"{validPairsCount} word pairs found!");
+
+            if (mirrorWords.Count != 0)
+            {
+                Console.WriteLine("The mirror words are:");
+                Console.WriteLine(string.Join(", ", mirrorWords));
+            }
+            else
+            {
+                Console.WriteLine($"No mirror words!");
+            }
+        }
+        else
+        {
+            Console.WriteLine($"No word pairs found!");
+            Console.WriteLine($"No mirror words!");
+        }
+    }
+}
