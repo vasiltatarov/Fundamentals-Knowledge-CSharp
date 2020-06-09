@@ -29,65 +29,51 @@ class Program
                 uint distance = uint.Parse(line[2]);
                 uint fuel = uint.Parse(line[3]);
 
-                foreach (Car car in cars)
+                var match = cars.Find(x => x.Model == model);
+
+                if (match != null)
                 {
-                    if (car.Model == model)
+                    if (match.Fuel >= fuel)
                     {
-                        if (car.Fuel >= fuel)
+                        match.Mileage += distance;
+                        match.Fuel -= fuel;
+
+                        Console.WriteLine($"{match.Model} driven for {distance} kilometers. {fuel} liters of fuel consumed.");
+
+                        if (match.Mileage >= 100000)
                         {
-                            car.Mileage += distance;
-                            car.Fuel -= fuel;
-
-                            Console.WriteLine($"{car.Model} driven for {distance} kilometers. {fuel} liters of fuel consumed.");
-
-                            if (car.Mileage >= 100000)
-                            {
-                                Console.WriteLine($"Time to sell the {model}!");
-                                cars.Remove(car);
-                            }
-
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Not enough fuel to make that ride");
-                            break;
+                            Console.WriteLine($"Time to sell the {model}!");
+                            cars.Remove(match);
                         }
                     }
                     else
                     {
-                        continue;
+                        Console.WriteLine("Not enough fuel to make that ride");
                     }
                 }
+
             }
             else if (line[0] == "Refuel")
             {
                 string model = line[1];
                 uint fuel = uint.Parse(line[2]);
 
-                foreach (Car car in cars)
+                var match = cars.Find(x => x.Model == model);
+
+                if (match != null)
                 {
-                    if (car.Model == model)
+                    if (match.Fuel + fuel > 75)
                     {
-                        if (car.Fuel + fuel > 75)
-                        {
-                            var refuel = 75 - car.Fuel;
-                            car.Fuel = 75;
+                        var refuel = 75 - match.Fuel;
+                        match.Fuel = 75;
 
-                            Console.WriteLine($"{model} refueled with {refuel} liters");
-                            break;
-                        }
-                        else
-                        {
-                            car.Fuel += fuel;
-
-                            Console.WriteLine($"{model} refueled with {fuel} liters");
-                            break;
-                        }
+                        Console.WriteLine($"{model} refueled with {refuel} liters");
                     }
                     else
                     {
-                        continue;
+                        match.Fuel += fuel;
+
+                        Console.WriteLine($"{model} refueled with {fuel} liters");
                     }
                 }
             }
@@ -96,24 +82,19 @@ class Program
                 string model = line[1];
                 uint kilometers = uint.Parse(line[2]);
 
-                foreach (Car car in cars)
+                var match = cars.Find(x => x.Model == model);
+
+                if (match != null)
                 {
-                    if (car.Model == model)
+                    match.Mileage -= kilometers;
+
+                    if (match.Mileage < 10000)
                     {
-                        car.Mileage -= kilometers;
-
-                        if (car.Mileage < 10000)
-                        {
-                            car.Mileage = 10000;
-                            break;
-                        }
-
-                        Console.WriteLine($"{car.Model} mileage decreased by {kilometers} kilometers");
-                        break;
+                        match.Mileage = 10000;
                     }
                     else
                     {
-                        continue;
+                        Console.WriteLine($"{match.Model} mileage decreased by {kilometers} kilometers");
                     }
                 }
             }
