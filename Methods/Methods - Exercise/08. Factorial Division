@@ -7,7 +7,7 @@ using System;
             int firstNum = int.Parse(Console.ReadLine());
             int secondNum = int.Parse(Console.ReadLine());
 
-            int firstNumFacturial = GetFacturial(firstNum);
+            Long firstNumFacturial = GetFacturial(firstNum);
             int secondNumFacturial = GetFacturial(secondNum);
 
             double devideFact = devideFacturials(firstNumFacturial, secondNumFacturial);
