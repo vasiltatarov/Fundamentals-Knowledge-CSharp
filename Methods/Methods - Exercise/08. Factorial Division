@@ -1,3 +1,7 @@
+using System;
+
+    Class Program
+    {
         static void Main()
         {
             int firstNum = int.Parse(Console.ReadLine());
@@ -27,3 +31,4 @@
         {
             return first / second;
         }
+    }
