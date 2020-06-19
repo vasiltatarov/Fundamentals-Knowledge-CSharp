@@ -1,115 +1,98 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Threading;
-using System.Net.Security;
+using System.Linq;
 
-namespace RealWorldExample
+namespace List_Exercise
 {
     class Program
     {
         static void Main()
         {
-            List<string> virus = Console.ReadLine().Split(" ").ToList();
+            List<string> data = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).ToList();
+            string lines;
 
-            while (true)
+            while ((lines = Console.ReadLine()) != "3:1")
             {
-                List<string> command = Console.ReadLine().Split().ToList();
+                string[] command = lines.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
-                if (command[0] == "3:1")
+                if (command[0] == "merge")
                 {
-                    Console.WriteLine(string.Join(" ", virus));
-                    return;
-                }
-                else if (command[0] == "merge")
-                {
-                    GetMerge(virus, command);
+                    Merge(data, command);
                 }
                 else if (command[0] == "divide")
                 {
-                    GetDivide(virus, command);
+                    Divide(data, command);
                 }
             }
+
+            Console.WriteLine(string.Join(" ", data));
         }
 
-        private static void GetMerge(List<string> virus, List<string> command)
+        public static void Divide(List<string> data, string[] command)
         {
-            int startIndex = int.Parse(command[1]);
-            int endIndex = int.Parse(command[2]);
-
-            if (startIndex < 0)
-            {
-                startIndex = 0;
-            }
-            else if (startIndex > virus.Count - 1)
-            {
-                startIndex = virus.Count - 1;
-            }
-
-            if (endIndex < 0)
-            {
-                endIndex = 0;
-            }
-            else if (endIndex > virus.Count - 1)
-            {
-                endIndex = virus.Count - 1;
-            }
-
-            List<string> temp = new List<string>();
-
-            for (int i = startIndex; i <= endIndex; i++)
-            {
-                temp.Add(virus[i]);
-            }
-
-            virus[startIndex] = string.Join("", temp);
-
-            for (int i = startIndex + 1; i <= endIndex; i++)
-            {
-                virus.RemoveAt(startIndex + 1);
-            }
-        }
-
-        private static void GetDivide(List<string> virus, List<string> command)
-        {
-            List<string> temp = new List<string>();
-
-            string toDivide = virus[int.Parse(command[1])];
+            int index = int.Parse(command[1]);
             int partitions = int.Parse(command[2]);
+            string element = data[index];
+            int partLength = element.Length / partitions;
+            int additionalPartLength = element.Length % partitions;
 
-            int partLength = toDivide.Length / int.Parse(command[2]);
-            int additionalPartLength = toDivide.Length % int.Parse(command[2]);
+            List<string> temp = new List<string>();
 
             for (int i = 0; i < partitions; i++)
             {
-                if (i == partitions - 1) partLength += additionalPartLength;
-                temp.Add(toDivide.Substring(0, partLength));
-                toDivide = toDivide.Remove(0, partLength);
+                if (i == partitions - 1)
+                {
+                    partLength += additionalPartLength;
+                }
+
+                temp.Add(element.Substring(0, partLength));
+                element = element.Remove(0, partLength);
             }
 
-            virus.RemoveAt(int.Parse(command[1]));
-            virus.InsertRange(int.Parse(command[1]), temp);
-
-            //string toDivide = virus[int.Parse(command[1])];
-            //int partitions = int.Parse(command[2]);
-
-            //List<string> temp = new List<string>();
-
-            //int partLength = toDivide.Length / partitions;
-            //int additionalPartLength = toDivide.Length % partitions;
-
-            //for (int i = 0; i < partitions; i++)
-            //{
-            //    if (i == partitions - 1)
-            //    {
-            //        partLength += additionalPartLength;
-            //        temp.Add(toDivide.Substring(0, partLength));
-            //        toDivide = toDivide.Remove(0, partLength);
-            //    }
-            //}
-
-            //virus.RemoveAt(int.Parse(command[1]));
-            //virus.InsertRange(int.Parse(command[1]), temp);
+            data.RemoveAt(int.Parse(command[1]));
+            data.InsertRange(int.Parse(command[1]), temp);
         }
+
+        public static void Merge(List<string> data, string[] command)
+        {
+            int startIndex = int.Parse(command[1]);
+            int endIndex = int.Parse(command[2]);
+            string concatData = string.Empty;
+
+            if (startIndex < 0)
+            {
+                if (endIndex >= 0 && endIndex < data.Count)
+                {
+                    startIndex = 0;
+                }
+            }
+
+            if (endIndex > data.Count - 1)
+            {
+                if (startIndex >= 0 && startIndex <= data.Count)
+                {
+                    endIndex = data.Count - 1;
+                }
+            }
+
+            if (startIndex < 0 && endIndex > data.Count - 1)
+            {
+                startIndex = 0;
+                endIndex = data.Count - 1;
+            }
+
+            if ((startIndex >= 0 && startIndex < data.Count) && (endIndex >= 0 && endIndex < data.Count))
+            {
+
+                for (int i = startIndex; i <= endIndex; i++)
+                {
+                    concatData += data[i];
+                }
+
+                data.RemoveRange(startIndex, endIndex - startIndex + 1);
+                data.Insert(startIndex, concatData);
+            }
+        }
+
     }
 }
