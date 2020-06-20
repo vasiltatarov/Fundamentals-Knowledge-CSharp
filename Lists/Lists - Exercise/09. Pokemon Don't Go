@@ -1,94 +1,55 @@
 using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Net.Security;
 
-namespace RealWorldExample
+namespace List_Exercise
 {
     class Program
     {
         static void Main()
         {
-            List<int> distanceToPokemons = Console.ReadLine().Split(" ").Select(int.Parse).ToList();
+            var distance = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+            int summOfRemovedElements = 0;
 
-            List<int> sumOfElements = new List<int>();
-
-            while (distanceToPokemons.Count > 0)
+            while (distance.Count > 0)
             {
-                int index = int.Parse(Console.ReadLine());
+                int indexes = int.Parse(Console.ReadLine());
+                int valueOfRemovedElement = 0;
 
-                RemoveIndex(distanceToPokemons, index, sumOfElements);
+                if (indexes >= 0 && indexes < distance.Count)
+                {
+                    valueOfRemovedElement = distance[indexes];
+                    distance.RemoveAt(indexes);
+                }
+                else if (indexes < 0)
+                {
+                    valueOfRemovedElement = distance[0];
+                    distance.RemoveAt(0);
+                    distance.Insert(0, distance[distance.Count - 1]);
+                }
+                else if (indexes > distance.Count - 1)
+                {
+                    valueOfRemovedElement = distance[distance.Count - 1];
+                    distance.RemoveAt(distance.Count - 1);
+                    distance.Add(distance[0]);
+                }
+
+                summOfRemovedElements += valueOfRemovedElement;
+
+                for (int i = 0; i < distance.Count; i++)
+                {
+                    if (distance[i] <= valueOfRemovedElement)
+                    {
+                        distance[i] += valueOfRemovedElement;
+                    }
+                    else
+                    {
+                        distance[i] -= valueOfRemovedElement;
+                    }
+                }
             }
 
-            Console.WriteLine(string.Join("", sumOfElements.Sum()));
+            Console.WriteLine(summOfRemovedElements);
         }
 
-        private static void RemoveIndex(List<int> distanceToPokemons, int index, List<int> sumOfElements)
-        {
-            if (index < 0)
-            {
-                int firstIndex = distanceToPokemons[0];
-
-                sumOfElements.Add(firstIndex);
-
-                for (int i = 0; i < distanceToPokemons.Count; i++)
-                {
-                    if (distanceToPokemons[i] <= firstIndex)
-                    {
-                        distanceToPokemons[i] += firstIndex;
-                    }
-                    else if (distanceToPokemons[i] > firstIndex)
-                    {
-                        distanceToPokemons[i] -= firstIndex;
-                    }
-                }
-
-                return;
-            }
-            else if (index > distanceToPokemons.Count - 1)
-            {
-                int lastIndex = distanceToPokemons[distanceToPokemons.Count - 1];
-
-                sumOfElements.Add(lastIndex);
-
-                for (int i = 0; i < distanceToPokemons.Count; i++)
-                {
-                    if (distanceToPokemons[i] <= lastIndex)
-                    {
-                        distanceToPokemons[i] += lastIndex;
-                    }
-                    else if (distanceToPokemons[i] > lastIndex)
-                    {
-                        distanceToPokemons[i] -= lastIndex;
-                    }
-                }
-
-                return;
-                //Console.WriteLine(string.Join(" ", distanceToPokemons));
-            }
-            else
-            {
-                int currentValue = distanceToPokemons[index];
-
-                sumOfElements.Add(currentValue);
-                distanceToPokemons.RemoveAt(index);
-
-                for (int i = 0; i < distanceToPokemons.Count; i++)
-                {
-                    if (distanceToPokemons[i] <= currentValue)
-                    {
-                        distanceToPokemons[i] += currentValue;
-                    }
-                    else if (distanceToPokemons[i] > currentValue)
-                    {
-                        distanceToPokemons[i] -= currentValue;
-                    }
-                }
-
-                return;
-                //Console.WriteLine(string.Join(" ", distanceToPokemons));
-            }
-        }
     }
 }
