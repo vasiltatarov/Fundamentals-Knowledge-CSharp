@@ -11,15 +11,10 @@ namespace _10._Student_Groups
         {
             List<Town> towns = new List<Town>();
             List<Group> groups = new List<Group>();
-            string input;
+            string input = Console.ReadLine();
 
-            while ((input = Console.ReadLine()) != "End")
-            {
-                ReadTownsAndStudents(input, towns);
-            }
-
+            ReadTownsAndStudents(input, towns);
             ReadGroups(towns, groups);
-
             PrintGroups(towns, groups);
         }
 
@@ -59,25 +54,30 @@ namespace _10._Student_Groups
 
         public static void ReadTownsAndStudents(string input, List<Town> towns)
         {
-            if (input.Contains('='))
+            while (input != "End")
             {
-                string[] townArgs = input.Split(new[] { " => " }, StringSplitOptions.RemoveEmptyEntries);
-                string[] seatsArgs = townArgs[1].Split(" ", StringSplitOptions.RemoveEmptyEntries);
-                string townName = townArgs[0];
-                int seatsOfTown = int.Parse(seatsArgs[0]);
+                if (input.Contains('='))
+                {
+                    string[] townArgs = input.Split(new[] { " => " }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] seatsArgs = townArgs[1].Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                    string townName = townArgs[0];
+                    int seatsOfTown = int.Parse(seatsArgs[0]);
 
-                Town town = new Town(townName, seatsOfTown);
-                towns.Add(town);
-            }
-            else
-            {
-                string[] studentArgs = input.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
-                string name = studentArgs[0].Trim();
-                string email = studentArgs[1].Trim();
-                DateTime registrationDate = DateTime.ParseExact(studentArgs[2].Trim(), "d-MMM-yyyy", CultureInfo.InvariantCulture);
+                    Town town = new Town(townName, seatsOfTown);
+                    towns.Add(town);
+                }
+                else
+                {
+                    string[] studentArgs = input.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
+                    string name = studentArgs[0].Trim();
+                    string email = studentArgs[1].Trim();
+                    DateTime registrationDate = DateTime.ParseExact(studentArgs[2].Trim(), "d-MMM-yyyy", CultureInfo.InvariantCulture);
 
-                Student student = new Student(name, email, registrationDate);
-                towns[towns.Count - 1].Students.Add(student);
+                    Student student = new Student(name, email, registrationDate);
+                    towns[towns.Count - 1].Students.Add(student);
+                }
+
+                input = Console.ReadLine();
             }
         }
     }
