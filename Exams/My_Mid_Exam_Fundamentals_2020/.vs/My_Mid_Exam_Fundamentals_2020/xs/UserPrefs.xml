@@ -1,0 +1,32 @@
+﻿<Properties StartupConfiguration="{4E43D808-6293-4B3B-B46C-EA9070C8E54A}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Problem_03/Program.cs">
+    <Files>
+      <File FileName="Problem_01/Program.cs" Line="4" Column="2" />
+      <File FileName="Problem_02/Program.cs" Line="19" Column="18" />
+      <File FileName="../../../../../../../../usr/local/share/dotnet/sdk/3.0.100/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.TargetFrameworkInference.targets" Line="127" Column="5" />
+      <File FileName="Problem_03/Program.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="My_Mid_Exam_Fundamentals_2020" expanded="True">
+            <Node name="Problem_01" expanded="True" />
+            <Node name="Problem_02" expanded="True" />
+            <Node name="Problem_03" expanded="True">
+              <Node name="Program.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.Problem__02 PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.Problem__01 PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Problem__03 PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
