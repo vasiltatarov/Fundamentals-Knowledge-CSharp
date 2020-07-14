@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,25 +10,54 @@ namespace Problem_01
         {
             var contests = new Dictionary<string, string>();
             var students = new SortedDictionary<string, Dictionary<string, int>>();
+            
+            ReadContests(contests);
+            ReadStudentsInfo(contests, students);
+            PrintBestStudent(students);
+            PrintStudents(students);
+        }
 
-            while (true)
+        private static void PrintStudents(SortedDictionary<string, Dictionary<string, int>> students)
+        {
+            Console.WriteLine("Ranking:");
+
+            foreach (var kvp in students)
             {
-                var contestInfo = Console.ReadLine().Split(":", StringSplitOptions.RemoveEmptyEntries);
+                Console.WriteLine(kvp.Key);
 
-                if (contestInfo[0] == "end of contests")
+                foreach (var contest in kvp.Value.OrderByDescending(x => x.Value))
                 {
-                    break;
+                    Console.WriteLine($"#  {contest.Key} -> {contest.Value}");
+                }
+            }
+        }
+
+        private static void PrintBestStudent(SortedDictionary<string, Dictionary<string, int>> students)
+        {
+            var user = "";
+            int maxPoint = 0;
+
+            foreach (var kvp in students)
+            {
+                int currentPoints = 0;
+
+                foreach (var point in kvp.Value)
+                {
+                    currentPoints += point.Value;
                 }
 
-                var contest = contestInfo[0];
-                var contestPoints = contestInfo[1];
-
-                if (!contests.ContainsKey(contest))
+                if (currentPoints > maxPoint)
                 {
-                    contests.Add(contest, contestPoints);
+                    maxPoint = currentPoints;
+                    user = kvp.Key;
                 }
             }
 
+            Console.WriteLine($"Best candidate is {user} with total {maxPoint} points.");
+        }
+
+        private static void ReadStudentsInfo(Dictionary<string, string> contests, SortedDictionary<string, Dictionary<string, int>> students)
+        {
             while (true)
             {
                 var contestInfo = Console.ReadLine().Split("=>", StringSplitOptions.RemoveEmptyEntries);
@@ -60,36 +89,25 @@ namespace Problem_01
                     }
                 }
             }
+        }
 
-            var user = "";
-            int maxPoint = 0;
-
-            foreach (var kvp in students)
+        private static void ReadContests(Dictionary<string, string> contests)
+        {
+            while (true)
             {
-                int currentPoints = 0;
+                var contestInfo = Console.ReadLine().Split(":", StringSplitOptions.RemoveEmptyEntries);
 
-                foreach (var point in kvp.Value)
+                if (contestInfo[0] == "end of contests")
                 {
-                    currentPoints += point.Value;
+                    break;
                 }
 
-                if (currentPoints > maxPoint)
+                var contest = contestInfo[0];
+                var contestPoints = contestInfo[1];
+
+                if (!contests.ContainsKey(contest))
                 {
-                    maxPoint = currentPoints;
-                    user = kvp.Key;
-                }
-            }
-
-            Console.WriteLine($"Best candidate is {user} with total {maxPoint} points.");
-            Console.WriteLine("Ranking:");
-
-            foreach (var kvp in students)
-            {
-                Console.WriteLine(kvp.Key);
-
-                foreach (var contest in kvp.Value.OrderByDescending(x => x.Value))
-                {
-                    Console.WriteLine($"#  {contest.Key} -> {contest.Value}");
+                    contests.Add(contest, contestPoints);
                 }
             }
         }
