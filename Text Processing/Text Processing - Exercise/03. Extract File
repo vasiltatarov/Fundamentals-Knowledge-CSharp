@@ -1,7 +1,0 @@
-            string[] file = Console.ReadLine().Split(new[] {@"\"},StringSplitOptions.RemoveEmptyEntries);
-            string[] fileArgs = file[file.Length - 1].Split(".");
-            string fileName = fileArgs[0];
-            string extension = fileArgs[1];
-
-            Console.WriteLine($"File name: {fileName}");
-            Console.WriteLine($"File extension: {extension}");

@@ -1,5 +1,0 @@
-            BigInteger firstNumber = BigInteger.Parse(Console.ReadLine());
-            byte secondNumber = byte.Parse(Console.ReadLine());
-            BigInteger result = firstNumber * secondNumber;
-
-            Console.WriteLine(result);
