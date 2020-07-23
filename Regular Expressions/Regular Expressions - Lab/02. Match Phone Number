@@ -1,7 +1,0 @@
-            Regex regex = new Regex(@"\+[359]+( |-)[2]\1\d{3}\1\d{4}\b");
-
-            var phoneNumbers = Console.ReadLine();
-            
-            var phoneRegexNumbers = regex.Matches(phoneNumbers);
-
-            Console.WriteLine(string.Join(", ", phoneRegexNumbers));
